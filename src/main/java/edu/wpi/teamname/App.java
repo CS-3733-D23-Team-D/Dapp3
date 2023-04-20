@@ -1,5 +1,6 @@
 package edu.wpi.teamname;
 
+import edu.wpi.teamname.controllers.LoadingScreenController;
 import edu.wpi.teamname.database.DataManager;
 import java.io.IOException;
 import java.sql.Connection;
@@ -27,12 +28,15 @@ public class App extends Application {
 
   @Override
   public void start(Stage primaryStage) throws IOException, InterruptedException {
+    do {
+      Navigation.navigate(Screen.LOADING);
+      LoadingScreenController l = new LoadingScreenController();
+      l.loading();
+    } while (loadUp(primaryStage));
 
-    Navigation.navigate(Screen.LOADING);
-    Thread.sleep(5 * 1000);
-    //    LoadingScreenController l = new LoadingScreenController();
-    //    l.initialize(3);
+  }
 
+  private boolean loadUp(Stage primaryStage) throws IOException {
     /* primaryStage is generally only used if one of your components require the stage to display */
     App.primaryStage = primaryStage;
     primaryStage.setFullScreen(true);
@@ -46,6 +50,7 @@ public class App extends Application {
     primaryStage.show();
 
     Navigation.navigate(Screen.HOME);
+    return false;//done loading
   }
 
   @Override
