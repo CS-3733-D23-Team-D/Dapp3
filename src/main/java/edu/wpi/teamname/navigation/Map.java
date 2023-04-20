@@ -48,6 +48,7 @@ public class Map {
 
   /**
    * Constructs a Map object with the given sub-anchor pane.
+   *
    * @param subAnchor the sub-anchor pane used to display the map.
    * @throws SQLException if there is an error accessing the database.
    */
@@ -59,6 +60,7 @@ public class Map {
 
   /**
    * Creates and returns an ArrayList of all nodes and edges on the given floor.
+   *
    * @param floor the floor to retrieve nodes and edges from.
    * @param isMapPage whether or not the map is currently being displayed.
    * @return an ArrayList of all nodes and edges on the given floor as JavaFX Node objects.
@@ -78,6 +80,7 @@ public class Map {
 
   /**
    * Creates and returns an ArrayList of all edges on the given floor.
+   *
    * @param floor the floor to retrieve edges from.
    * @param isMapPage whether or not the map is currently being displayed.
    * @return an ArrayList of all edges on the given floor as JavaFX Node objects.

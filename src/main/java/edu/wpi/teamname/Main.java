@@ -6,12 +6,14 @@ import java.sql.SQLException;
 import java.text.ParseException;
 
 public class Main {
-  public static void main(String[] args) throws SQLException, IOException, ParseException {
+  public static void main(String[] args)
+      throws SQLException, IOException, ParseException, InterruptedException {
 
     DataManager.configConnection(
         "jdbc:postgresql://database.cs.wpi.edu:5432/teamddb?currentSchema=\"teamD\"",
         "teamd",
         "teamd40");
+
     App.launch(App.class, args);
   }
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="75.0" prefHeight="75.0" prefWidth="317.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teamname.controllers.LoadingScreenController">
+    <children>
+        <Label prefHeight="73.0" prefWidth="154.0" text="Loading">
+            <font>
+                <Font name="Roboto" size="40.0" />
+            </font>
+        </Label>
+        <StackPane fx:id="load1" layoutX="154.0" layoutY="14.0" prefHeight="45.0" prefWidth="45.0">
+            <children>
+                <ImageView fitHeight="45.0" fitWidth="45.0" opacity="0.78">
+                    <image>
+                        <Image url="@../images/logo.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </StackPane>
+        <StackPane fx:id="load2" layoutX="206.0" layoutY="14.0" prefHeight="45.0" prefWidth="45.0">
+            <children>
+                <ImageView fitHeight="45.0" fitWidth="45.0" opacity="0.78">
+                    <image>
+                        <Image url="@../images/logo.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </StackPane>
+        <StackPane fx:id="load3" layoutX="260.0" layoutY="14.0" prefHeight="45.0" prefWidth="45.0">
+            <children>
+                <ImageView fitHeight="45.0" fitWidth="45.0" opacity="0.78">
+                    <image>
+                        <Image url="@../images/logo.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </StackPane>
+    </children>
+</AnchorPane>

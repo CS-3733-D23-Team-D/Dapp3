@@ -26,9 +26,12 @@ public class App extends Application {
   }
 
   @Override
-  public void start(Stage primaryStage) throws IOException {
-    //    LoadingScreen l = new LoadingScreen();
-    //    l.displayLoading();
+  public void start(Stage primaryStage) throws IOException, InterruptedException {
+
+    Navigation.navigate(Screen.LOADING);
+    Thread.sleep(5 * 1000);
+    //    LoadingScreenController l = new LoadingScreenController();
+    //    l.initialize(3);
 
     /* primaryStage is generally only used if one of your components require the stage to display */
     App.primaryStage = primaryStage;
@@ -38,7 +41,6 @@ public class App extends Application {
     final BorderPane root = loader.load();
 
     App.rootPane = root;
-
     final Scene scene = new Scene(root);
     primaryStage.setScene(scene);
     primaryStage.show();
