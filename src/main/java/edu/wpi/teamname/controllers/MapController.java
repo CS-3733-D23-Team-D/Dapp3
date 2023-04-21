@@ -38,6 +38,7 @@ public class MapController {
   @FXML ComboBox<String> EndPointSelect = new ComboBox<>();
   @FXML MFXButton DeleteNodeButton = new MFXButton();
   @FXML MFXButton findPathButton = new MFXButton();
+  @FXML MFXButton ViewMessageButton = new MFXButton();
   // @FXML ComboBox<String> FloorSelect = new ComboBox<>();
   @FXML ComboBox<String> AlgoSelect = new ComboBox<>();
   @FXML CheckBox FloorsToggle = new CheckBox();
@@ -278,6 +279,14 @@ public class MapController {
             findPathButton.setVisible(true);
             //            map.drawAStarPath(anchor, floor1, floor2, sNode, eNode);
           }
+        }
+      };
+
+  EventHandler<MouseEvent> viewMessage =
+      new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+          System.out.println("Viewing Message");
         }
       };
 
@@ -562,6 +571,8 @@ public class MapController {
     FloorsToggle.setSelected(false);
     FloorsToggle.setDisable(false);
     FloorsToggle.setVisible(false);
+
+    ViewMessageButton.setOnMouseClicked(viewMessage);
 
     anchor.setOnMouseClicked(e);
 

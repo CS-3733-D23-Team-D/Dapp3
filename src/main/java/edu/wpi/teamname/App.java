@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class App extends Application {
 
-  @Setter @Getter private static Stage primaryStage;
+  @Setter @Getter public static Stage primaryStage;
   @Setter @Getter private static BorderPane rootPane;
   private boolean loading;
 
