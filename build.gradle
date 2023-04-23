@@ -46,9 +46,10 @@ dependencies {
             'com.github.hervegirod:fxsvgimage:1.1',
             'net.java.dev.jna:jna:5.12.1',
     )
+    implementation 'net.sf.sociaal:freetts:1.2.2'
     testImplementation 'junit:junit:4.13.1'
     testImplementation 'junit:junit:4.13.1'
-
+    //implementation files('src/main/resources/edu/wpi/teamname/jsapi.jar')
     String javaFxVersion = "19"
     implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'win'
     implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'mac'

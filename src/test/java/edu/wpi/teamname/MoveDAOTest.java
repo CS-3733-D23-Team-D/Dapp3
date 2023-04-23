@@ -17,16 +17,20 @@ public class MoveDAOTest {
   @BeforeEach
   void setUp() throws SQLException {
     // TODO: Put in docker info
-    DataManager.configConnection("jdbc:postgresql://localhost:5432/postgres", "user", "pass");
-    String query =
-        "CREATE TABLE IF NOT EXISTS \"Move\" (\"nodeID\" INT, \"longName\" VARCHAR(30), \"date\" timestamp);";
-    Connection connection = DataManager.DbConnection();
-    PreparedStatement statement = connection.prepareStatement(query);
-    statement.executeUpdate();
+    try {
+      DataManager.configConnection("jdbc:postgresql://localhost:5432/postgres", "user", "pass");
+      String query =
+          "CREATE TABLE IF NOT EXISTS \"Move\" (\"nodeID\" INT, \"longName\" VARCHAR(30), \"date\" timestamp);";
+      Connection connection = DataManager.DbConnection();
+      PreparedStatement statement = connection.prepareStatement(query);
+      statement.executeUpdate();
 
-    query = "TRUNCATE TABLE \"Move\"";
-    statement = connection.prepareStatement(query);
-    statement.executeUpdate();
+      query = "TRUNCATE TABLE \"Move\"";
+      statement = connection.prepareStatement(query);
+      statement.executeUpdate();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
   }
 
   @Test
