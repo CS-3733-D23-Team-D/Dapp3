@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import lombok.Getter;
 
 public class Graph {
-  @Getter private ArrayList<Node> Nodes = new ArrayList<>();
+  @Getter private ArrayList<Node> nodes = new ArrayList<>();
   @Getter private ArrayList<Edge> Edges = new ArrayList<>();
   private IStrategyAlgo pathfindingAlgo;
+  private final int FLOORCHANGEDIST = 100;
 
   /**
    * Creates a new Graph by retrieving Nodes and Edges from the database.
@@ -18,10 +19,28 @@ public class Graph {
    * @throws SQLException if there is an error accessing the database
    */
   public Graph() throws SQLException {
-    Nodes = this.getAllNodes(); // Changed based on DB team
+    nodes = this.getAllNodes(); // Changed based on DB team
     Edges = this.getAllEdges(); // Changed based on DB team
     this.initializeEdges();
     pathfindingAlgo = new AStarAlgo();
+    // pathfindingAlgo = new BFSAlgo();
+
+    pathfindingAlgo = new AStarAlgo();
+
+    // pathfindingAlgo = new DijkstraAlgo();
+  }
+
+  /**
+   * Constructs a Graph object with the given list of nodes and edges.
+   *
+   * @param nodes the list of nodes in the graph.
+   * @param edges the list of edges connecting the nodes in the graph.
+   */
+  public Graph(ArrayList<Node> nodes, ArrayList<Edge> edges) {
+    this.nodes = nodes; // Changed based on DB team
+    Edges = edges; // Changed based on DB team
+    this.initializeEdges();
+    pathfindingAlgo = null;
   }
 
   /**
@@ -31,7 +50,15 @@ public class Graph {
    * @throws SQLException if there is an error accessing the database
    */
   private ArrayList<Node> getAllNodes() throws SQLException {
-    return DataManager.getAllNodes();
+    ArrayList<Node> nodes = DataManager.getAllNodes();
+    for (Node n : nodes) {
+      if (n.getFloor().equals("L2")) n.setZ(0);
+      else if (n.getFloor().equals("L1")) n.setZ(FLOORCHANGEDIST);
+      else if (n.getFloor().equals("1")) n.setZ(FLOORCHANGEDIST * 2);
+      else if (n.getFloor().equals("2")) n.setZ(FLOORCHANGEDIST * 3);
+      else if (n.getFloor().equals("3")) n.setZ(FLOORCHANGEDIST * 4);
+    }
+    return nodes;
   }
 
   /**
@@ -71,7 +98,8 @@ public class Graph {
    * @param targetNodeIndex the target Node
    */
   public void printPath(int startNodeIndex, int targetNodeIndex) {
-    System.out.println(this.getPathBetween(startNodeIndex, targetNodeIndex));
+    ArrayList<Node> path = this.getPathBetween(startNodeIndex, targetNodeIndex);
+    for (Node n : path) System.out.print(n.getId() + " ");
   }
 
   /**
@@ -82,20 +110,11 @@ public class Graph {
    */
   public void setAllG(Node s, Node t) {
     if (s == null || t == null) return;
-    for (Node n : this.Nodes) {
-      n.setG(findWeight(n, s));
+    for (Node n : this.nodes) {
+      n.setG(findWeight(t, s));
     }
     s.setG(0);
   }
-
-  /**
-   * Returns the shortest path between two nodes using A* algorithm.
-   *
-   * @param s the starting node.
-   * @param t the ending node.
-   * @return a list of nodes representing the shortest path between the starting node and the ending
-   *     node.
-   */
 
   /**
    * This method returns the node with the given ID.
@@ -104,7 +123,7 @@ public class Graph {
    * @return The node with the given ID
    */
   public Node findNodeByID(int nodeId) {
-    return Nodes.get(Node.idToIndex(nodeId));
+    return nodes.get(Node.idToIndex(nodeId));
   }
 
   /**
@@ -113,26 +132,50 @@ public class Graph {
   private void initializeEdges() {
     // Initialize the nodes with the node lines data
     for (int i = 0; i < Edges.size(); i++) {
-      Node StartNode = this.findNodeByID(Edges.get(i).getStartNodeID());
-      Node EndNode = this.findNodeByID(Edges.get(i).getEndNodeID());
+      Node startNode = this.findNodeByID(Edges.get(i).getStartNodeID());
+      Node endNode = this.findNodeByID(Edges.get(i).getEndNodeID());
 
-      StartNode.getNeighbors().add(EndNode);
-      EndNode.getNeighbors().add(StartNode);
+      startNode.getNeighbors().add(endNode);
+      endNode.getNeighbors().add(startNode);
     }
   }
 
+  /**
+   * Returns the pathfinding algorithm used by this object.
+   *
+   * @return the pathfinding algorithm used by this object.
+   */
   public IStrategyAlgo getPathfindingAlgo() {
     return pathfindingAlgo;
   }
 
+  /**
+   * Sets the pathfinding algorithm to be used by this object.
+   *
+   * @param algo the pathfinding algorithm to be used by this object.
+   */
   public void setPathfindingAlgo(IStrategyAlgo algo) {
     this.pathfindingAlgo = algo;
   }
 
+  /**
+   * Returns the path between two nodes using the pathfinding algorithm assigned to this object.
+   *
+   * @param startNodeId the ID of the starting node.
+   * @param targetNodeId the ID of the target node.
+   * @return the path between the start and target nodes as an ArrayList of Node objects.
+   */
   public ArrayList<Node> getPathBetween(int startNodeId, int targetNodeId) {
     return pathfindingAlgo.getPathBetween(this, startNodeId, targetNodeId);
   }
 
+  /**
+   * Returns the path between two nodes using the pathfinding algorithm assigned to this object.
+   *
+   * @param startNode the starting node.
+   * @param endNode the target node.
+   * @return the path between the start and target nodes as an ArrayList of Node objects.
+   */
   public ArrayList<Node> getPathBetween(Node startNode, Node endNode) {
     return pathfindingAlgo.getPathBetween(this, startNode.getId(), endNode.getId());
   }

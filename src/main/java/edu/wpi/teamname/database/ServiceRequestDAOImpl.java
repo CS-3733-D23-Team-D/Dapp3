@@ -30,14 +30,15 @@ public class ServiceRequestDAOImpl implements ServiceRequestDAO {
               + " WHERE \"requestID\" = ?";
       PreparedStatement statement = connection.prepareStatement(query);
       statement.setString(1, serviceRequest.getRoomNumber());
-      statement.setString(2, serviceRequest.getPatientName());
-      statement.setTimestamp(3, serviceRequest.getRequestedAt());
-      statement.setTimestamp(4, serviceRequest.getDeliverBy());
-      statement.setString(5, serviceRequest.getStatus().getStatusString());
-      statement.setString(6, serviceRequest.getRequestMadeBy());
-      statement.setInt(7, serviceRequest.getRequestID());
-      statement.setString(8, serviceRequest.getRequestType().getString());
-      statement.setInt(9, serviceRequest.getOriginalID());
+      statement.setString(2, serviceRequest.getStaffName());
+      statement.setString(3, serviceRequest.getPatientName());
+      statement.setTimestamp(4, serviceRequest.getRequestedAt());
+      statement.setTimestamp(5, serviceRequest.getDeliverBy());
+      statement.setString(6, serviceRequest.getStatus().getStatusString());
+      statement.setString(7, serviceRequest.getRequestMadeBy());
+      statement.setInt(8, serviceRequest.getRequestID());
+      statement.setString(9, serviceRequest.getRequestType().getString());
+      statement.setInt(10, serviceRequest.getOriginalID());
       statement.executeUpdate();
     } catch (SQLException e) {
       System.out.println(e.getMessage());
@@ -298,27 +299,28 @@ public class ServiceRequestDAOImpl implements ServiceRequestDAO {
       PreparedStatement statement = connection.prepareStatement(query);
       statement.setInt(1, id);
       ResultSet rs = statement.executeQuery();
-
-      int rID = rs.getInt("mealID");
-      String roomNum = rs.getString("roomNum");
-      String staffName = rs.getString("Meal");
-      String patientName = rs.getString("Cuisine");
-      Timestamp requestedAt = rs.getTimestamp("requestedAt");
-      Timestamp deliverBy = rs.getTimestamp("deliverBy");
-      Status status = Status.valueOf(rs.getString("status"));
-      String requestMadeBy = rs.getString("requestMadeBy");
-      RequestType requestType = RequestType.valueOf(rs.getString("requestType"));
-      serviceRequest =
-          (new ServiceRequest(
-              rID,
-              staffName,
-              patientName,
-              roomNum,
-              deliverBy,
-              requestedAt,
-              status,
-              requestMadeBy,
-              requestType));
+      while (rs.next()) {
+        int rID = rs.getInt("requestID");
+        String roomNum = rs.getString("roomNum");
+        String staffName = rs.getString("staffName");
+        String patientName = rs.getString("patientName");
+        Timestamp requestedAt = rs.getTimestamp("requestedAt");
+        Timestamp deliverBy = rs.getTimestamp("deliverBy");
+        Status status = Status.valueOf(rs.getString("status"));
+        String requestMadeBy = rs.getString("requestMadeBy");
+        RequestType requestType = RequestType.valueOf(rs.getString("requestType"));
+        serviceRequest =
+            (new ServiceRequest(
+                rID,
+                staffName,
+                patientName,
+                roomNum,
+                deliverBy,
+                requestedAt,
+                status,
+                requestMadeBy,
+                requestType));
+      }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }

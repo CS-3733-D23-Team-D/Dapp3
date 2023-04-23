@@ -8,75 +8,120 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="299.0" prefWidth="436.0" spacing="10.0" style="-fx-background-color: #E3E2E6;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="0.0" prefWidth="300.0" spacing="10.0" style="-fx-background-color: #E3E2E6;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
             <Label text="Location Name">
                <font>
                   <Font name="Roboto" size="13.0" />
                </font></Label>
-            <TextField style="-fx-background-color: D5E3ff; -fx-border-color: #000000; -fx-border-width: 2;" />
+            <TextField style="-fx-background-color: D5E3ff; -fx-background-radius: 10;" styleClass="text-field" stylesheets="@../stylesheets/TextField.css" />
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
-            <Label text="X">
+            <Label text="X Coordinate">
                <font>
                   <Font name="Roboto" size="13.0" />
-               </font></Label>
-            <TextField style="-fx-background-color: D5E3ff; -fx-border-color: #000000; -fx-border-width: 2;" />
+               </font>
+               <HBox.margin>
+                  <Insets left="7.5" />
+               </HBox.margin></Label>
+            <TextField style="-fx-background-color: D5E3ff; -fx-background-radius: 10;" styleClass="text-field" stylesheets="@../stylesheets/TextField.css">
+               <HBox.margin>
+                  <Insets left="7.5" />
+               </HBox.margin></TextField>
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
-            <Label text="Y">
+            <Label text="Y Coordinate">
                <font>
                   <Font name="Roboto" size="13.0" />
-               </font></Label>
-            <TextField style="-fx-background-color: D5E3ff; -fx-border-color: #000000; -fx-border-width: 2;" />
+               </font>
+               <HBox.margin>
+                  <Insets left="7.5" />
+               </HBox.margin></Label>
+            <TextField style="-fx-background-color: D5E3ff; -fx-background-radius: 10;" styleClass="text-field" stylesheets="@../stylesheets/TextField.css">
+               <HBox.margin>
+                  <Insets left="7.5" />
+               </HBox.margin></TextField>
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
-            <Label text="Floor">
+            <Label text="Floor Name">
                <font>
                   <Font name="Roboto" size="13.0" />
-               </font></Label>
-            <TextField style="-fx-background-color: D5E3ff; -fx-border-color: #000000; -fx-border-width: 2;" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.5" />
+               </HBox.margin></Label>
+            <TextField style="-fx-background-color: D5E3ff; -fx-background-radius: 10;" styleClass="text-field" stylesheets="@../stylesheets/TextField.css">
+               <HBox.margin>
+                  <Insets left="10.5" />
+               </HBox.margin></TextField>
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
             <Label text="Building">
                <font>
                   <Font name="Roboto" size="13.0" />
-               </font></Label>
-            <TextField style="-fx-background-color: D5E3ff; -fx-border-color: #000000; -fx-border-width: 2;" />
+               </font>
+               <HBox.margin>
+                  <Insets left="21.0" />
+               </HBox.margin></Label>
+            <TextField style="-fx-background-color: D5E3ff; -fx-background-radius: 10;" styleClass="text-field" stylesheets="@../stylesheets/TextField.css">
+               <HBox.margin>
+                  <Insets left="21.0" />
+               </HBox.margin></TextField>
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
             <Label text="Short Name">
                <font>
                   <Font name="Roboto" size="13.0" />
-               </font></Label>
-            <TextField style="-fx-background-color: D5E3ff; -fx-border-color: #000000; -fx-border-width: 2;" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin></Label>
+            <TextField style="-fx-background-color: D5E3ff; -fx-background-radius: 10;" styleClass="text-field" stylesheets="@../stylesheets/TextField.css">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin></TextField>
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
-            <Label text="nodeType">
+            <Label text="Node Type">
                <font>
                   <Font name="Roboto" size="13.0" />
-               </font></Label>
-            <TextField style="-fx-background-color: D5E3ff; -fx-border-color: #000000; -fx-border-width: 2;" />
+               </font>
+               <HBox.margin>
+                  <Insets left="13.5" />
+               </HBox.margin></Label>
+            <TextField style="-fx-background-color: D5E3ff; -fx-background-radius: 10;" styleClass="text-field" stylesheets="@../stylesheets/TextField.css">
+               <HBox.margin>
+                  <Insets left="13.5" />
+               </HBox.margin></TextField>
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
-            <MFXButton style="-fx-background-color: D5E3ff; -fx-border-color: #000000; -fx-border-width: 2;" text="Remove Node" />
-            <MFXButton style="-fx-background-color: D5E3ff; -fx-border-color: #000000; -fx-border-width: 2;" text="Submit" />
+            <MFXButton style="-fx-background-color: #012D5A;" text="Remove Node" textFill="#fffbfb">
+               <font>
+                  <Font name="Roboto" size="12.0" />
+               </font></MFXButton>
+            <MFXButton style="-fx-background-color: #012D5A;" text="Submit" textFill="WHITE">
+               <font>
+                  <Font name="Roboto" size="12.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin></MFXButton>
          </children>
       </HBox>
    </children>

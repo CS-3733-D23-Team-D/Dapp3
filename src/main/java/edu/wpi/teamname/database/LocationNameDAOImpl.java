@@ -239,11 +239,12 @@ public class LocationNameDAOImpl implements LocationNameDAO {
       PreparedStatement statement = connection.prepareStatement(query);
       statement.setString(1, name);
       ResultSet rs = statement.executeQuery();
-
-      String longn = rs.getString("longName");
-      String shortn = rs.getString("shortName");
-      String type = rs.getString("nodeType");
-      locationName = (new LocationName(longn, shortn, type));
+      while (rs.next()) {
+        String longn = rs.getString("longName");
+        String shortn = rs.getString("shortName");
+        String type = rs.getString("nodeType");
+        locationName = (new LocationName(longn, shortn, type));
+      }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }

@@ -1,5 +1,6 @@
 package edu.wpi.teamname.controllers;
 
+import edu.wpi.teamname.GlobalVariables;
 import edu.wpi.teamname.Navigation;
 import edu.wpi.teamname.Screen;
 import edu.wpi.teamname.controllers.JFXitems.ReqMenuItems;
@@ -65,7 +66,11 @@ public class ServiceRequestController {
   ObservableList<String> timeValues = FXCollections.observableArrayList();
   ObservableList<String> serviceType =
       FXCollections.observableArrayList(
-          "Meal Delivery", "Flower Delivery", "Office Supply Delivery", "Furniture Delivery");
+          "Meal Delivery",
+          "Flower Delivery",
+          "Office Supply Delivery",
+          "Furniture Delivery",
+          "Medical Supply Delivery");
   @FXML ComboBox requestType;
 
   // menu item page
@@ -73,32 +78,6 @@ public class ServiceRequestController {
   @FXML TextField searchBar;
   @FXML VBox itemBox;
   @FXML ScrollPane glitchyPane;
-  ObservableList<String> mealItems =
-      FXCollections.observableArrayList(
-          "Burger", "Pizza", "Cookies", "Spaghet", "Ice Cream Cone", "Banana", "Banana Split");
-  ObservableList<String> flowerItems =
-      FXCollections.observableArrayList(
-          "Black Cosmos",
-          "Gold Roses",
-          "Orange Tulips",
-          "Green Mums",
-          "Orange Cosmos",
-          "Purple Hyacinths",
-          "Pink Hyacinths");
-
-  ObservableList<String> furnitureItems =
-      FXCollections.observableArrayList(
-          "Harlow Dresser",
-          "Aspen Bed",
-          "Eames Lounge Chair",
-          "Tulip Dining Table",
-          "Oslo Recliner",
-          "Baxter Bookcase",
-          "Palmer Ottoman");
-
-  ObservableList<String> officeItems =
-      FXCollections.observableArrayList(
-          "Stapler", "Calculator", "Pen", "Paper shredder", "Notebook", "Desk lamp", "Whiteboard");
 
   @FXML AnchorPane summaryPane;
   @FXML Label summaryLabel;
@@ -158,6 +137,11 @@ public class ServiceRequestController {
         ArrayList<OfficeSupply> tems = DataManager.getAllOfficeSupplies();
         items.addAll(tems);
         reqType = RequestType.OFFICESUPPLY;
+      } else if (requestType.getValue() == "Medical Supply Delivery") {
+        folder = "MedicalIcons";
+        ArrayList<MedicalSupply> temp = DataManager.getAllMedicalSupplies();
+        items.addAll(temp);
+        reqType = RequestType.MEDICALSUPPLY;
       } else { // "Furniture Delivery"
         folder = "FurnitureIcons";
         ArrayList<Furniture> tems = DataManager.getAllFurniture();
@@ -174,7 +158,7 @@ public class ServiceRequestController {
               reqTS,
               Timestamp.from(Instant.now()),
               Status.BLANK,
-              "test",
+              GlobalVariables.getCurrentUser().getUsername(),
               reqType));
       // glitchyPane.setMaxHeight(glitchyPane.getHvalue());
       for (int a = 0; a < items.size(); a++) {
@@ -198,7 +182,7 @@ public class ServiceRequestController {
       setVisibleScreen(2);
       nextButton.setText("Submit");
       requestPage = 2;
-      summaryLabel.setText(request.toString());
+      summaryLabel.setText(request.getDetails());
 
       ArrayList<RequestItem> tem = new ArrayList<>();
       double totalPrice = 0.0;
@@ -213,6 +197,9 @@ public class ServiceRequestController {
       } else if (t == "Office Supply Request") {
         f = "OfficeIcons";
         tem.addAll(DataManager.getAllOfficeSupplies());
+      } else if (t == "Medical Supply Request") {
+        f = "MedicalIcons";
+        tem.addAll(DataManager.getAllMedicalSupplies());
       } else {
         f = "FurnitureIcons";
         System.out.println(t);
@@ -344,7 +331,7 @@ public class ServiceRequestController {
         event -> {
           setVisibleScreen(1);
           cartBox.getChildren().clear();
-          totalLabel.setText("Quantity: ");
+          totalLabel.setText("Total Price: ");
         });
 
     Platform.runLater(
@@ -355,7 +342,7 @@ public class ServiceRequestController {
   }
 
   public void refreshPrice() throws SQLException {
-    totalLabel.setText("Quantity: ");
+    totalLabel.setText("Total Price: ");
     ArrayList<RequestItem> tem = new ArrayList<>();
     double totalPrice = 0.0;
     String t = request.getRequestType().toString();
@@ -365,6 +352,8 @@ public class ServiceRequestController {
       tem.addAll(DataManager.getAllFlowers());
     } else if (t == "Office Supply Request") {
       tem.addAll(DataManager.getAllOfficeSupplies());
+    } else if (t == "Medical Supply Request") {
+      tem.addAll(DataManager.getAllMedicalSupplies());
     } else {
       System.out.println(t);
       tem.addAll(DataManager.getAllFurniture());
@@ -374,13 +363,13 @@ public class ServiceRequestController {
     // System.out.println(request.getItems());
     for (RequestItem item : tem) {
       c = request.countItem(item.getItemID());
-      // System.out.println(c);
+      System.out.println(c);
       if (c > 0) {
         totalPrice += c * item.getPrice();
       }
     }
     System.out.println(totalPrice);
-    DecimalFormat format = new DecimalFormat("###.00");
+    DecimalFormat format = new DecimalFormat("###0.00");
     totalLabel.setText(totalLabel.getText() + format.format(totalPrice));
   }
 }

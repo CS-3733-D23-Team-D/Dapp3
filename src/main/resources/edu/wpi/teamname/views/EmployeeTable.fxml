@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorInput?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.ComboBox?>
+<?import org.controlsfx.control.SearchableComboBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teamname.controllers.EmployeeTableController">
+   <children>
+      <VBox prefHeight="400.0" prefWidth="166.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="434.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label prefHeight="29.0" prefWidth="185.0" text="Add Employee" textFill="#235fa6">
+               <font>
+                  <Font name="Roboto" size="24.0" />
+               </font>
+               <padding>
+                  <Insets bottom="20.0" left="10.0" top="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+            <Label prefHeight="18.0" prefWidth="159.0" text="Employee ID" textFill="#001b3b">
+               <font>
+                  <Font name="Roboto" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="8.0" left="10.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="employeeIDField" maxWidth="280.0" style="-fx-background-color: #D5E3FF; -fx-background-radius: 10;" stylesheets="@../stylesheets/TextField.css">
+               <VBox.margin>
+                  <Insets left="10.0" right="5.0" />
+               </VBox.margin></TextField>
+            <Label prefHeight="18.0" prefWidth="159.0" text="First Name" textFill="#001b3b">
+               <font>
+                  <Font name="Roboto" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="8.0" left="10.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="employeeFirstNameTextField" maxWidth="280.0" style="-fx-background-color: #D5E3FF; -fx-background-radius: 10;" stylesheets="@../stylesheets/TextField.css">
+               <VBox.margin>
+                  <Insets left="10.0" right="5.0" />
+               </VBox.margin></TextField>
+            <Label prefHeight="18.0" prefWidth="159.0" text="Last Name" textFill="#001b3b">
+               <font>
+                  <Font name="Roboto" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="8.0" left="10.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="employeeLastNameTextField" maxWidth="280.0" style="-fx-background-color: #D5E3FF; -fx-background-radius: 10;" stylesheets="@../stylesheets/TextField.css">
+               <VBox.margin>
+                  <Insets left="10.0" right="5.0" />
+               </VBox.margin></TextField>
+            <Label prefHeight="18.0" prefWidth="159.0" text="Clearance Level" textFill="#001b3b">
+               <font>
+                  <Font name="Roboto" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" top="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="8.0" left="10.0" />
+               </padding>
+            </Label>
+            <ComboBox fx:id="employeeLevelText" maxWidth="280.0" style="-fx-background-color: #D5E3FF; -fx-background-radius: 10;" stylesheets="@../stylesheets/comboSmall.css">
+               <VBox.margin>
+                  <Insets left="10.0" right="5.0" />
+               </VBox.margin></ComboBox>
+            <Label prefHeight="18.0" prefWidth="159.0" text="Employee Type" textFill="#001b3b">
+               <font>
+                  <Font name="Roboto" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" top="10.0"/>
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="8.0" left="10.0" />
+               </padding>
+            </Label>
+            <SearchableComboBox fx:id="employeeTypeText" maxWidth="280.0" style="-fx-background-color: #D5E3FF; -fx-background-radius: 10;"  stylesheets="@../stylesheets/comboSmall.css">
+               <VBox.margin>
+                  <Insets left="10.0" right="5.0" />
+               </VBox.margin></SearchableComboBox>
+            <Label prefHeight="18.0" prefWidth="159.0" text="Username" textFill="#001b3b">
+               <font>
+                  <Font name="Roboto" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="8.0" left="10.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="employeeUserTextField" maxWidth="280.0" style="-fx-background-color: #D5E3FF; -fx-background-radius: 10;" stylesheets="@../stylesheets/TextField.css">
+               <VBox.margin>
+                  <Insets left="10.0" right="5.0" />
+               </VBox.margin></TextField>
+            <Label prefHeight="18.0" prefWidth="159.0" text="Password" textFill="#001b3b">
+               <font>
+                  <Font name="Roboto" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="8.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="employeePasswordTextField" maxWidth="280.0" style="-fx-background-color: #D5E3FF; -fx-background-radius: 10;" stylesheets="@../stylesheets/TextField.css">
+               <VBox.margin>
+                  <Insets left="10.0" right="5.0" />
+               </VBox.margin></TextField>
+            <MFXButton fx:id="submitButton" buttonType="RAISED" depthLevel="LEVEL0" maxWidth="-Infinity" onAction="#handleSubmitButton" prefHeight="25.0" prefWidth="230.0" rippleColor="#235fa6" style="-fx-font-size: 20;" stylesheets="@../stylesheets/menuItemButton.css" text="Submit">
+               <effect>
+                  <ColorInput paint="#235fa6" />
+               </effect>
+               <font>
+                  <Font name="Roboto" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="25.0" top="20.0" />
+               </VBox.margin>
+            </MFXButton>
+            <Label alignment="CENTER" prefHeight="29.0" prefWidth="180.0" text="CSV Manager" textFill="#235fa6">
+               <font>
+                  <Font name="Roboto" size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+            </Label>
+            <MFXButton fx:id="importButton" buttonType="RAISED" depthLevel="LEVEL0" maxWidth="-Infinity" prefHeight="25.0" prefWidth="230.0" rippleColor="#235fa6" style="-fx-font-size: 20;" stylesheets="@../stylesheets/menuItemButton.css" text="Import">
+               <effect>
+                  <ColorInput paint="#235fa6" />
+               </effect>
+               <VBox.margin>
+                  <Insets left="25.0" top="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Roboto" size="20.0" />
+               </font>
+            </MFXButton>
+            <MFXButton fx:id="exportButton" buttonType="RAISED" depthLevel="LEVEL0" maxWidth="-Infinity" prefHeight="25.0" prefWidth="230.0" rippleColor="#235fa6" style="-fx-font-size: 20;" stylesheets="@../stylesheets/menuItemButton.css" text="Export">
+               <effect>
+                  <ColorInput paint="#235fa6" />
+               </effect>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="25.0" top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Roboto" size="20.0" />
+               </font>
+            </MFXButton>
+         </children>
+      </VBox>
+      <HBox alignment="CENTER" layoutX="157.0" prefHeight="43.0" prefWidth="438.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="29.0" prefWidth="268.0" text="Employees" textFill="#235fa6">
+               <font>
+                  <Font name="Roboto" size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="24.0" prefWidth="165.0" text="Search ">
+               <font>
+                  <Font name="Roboto" size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="50.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="searchEmployee" prefHeight="54.0" prefWidth="248.0" style="-fx-background-color: #D5E3FF; -fx-background-radius: 10;" stylesheets="@../stylesheets/TextField.css">
+               <HBox.margin>
+                  <Insets bottom="7.0" right="10.0" top="7.0" />
+               </HBox.margin>
+               <padding>
+                  <Insets bottom="-10.0" />
+               </padding>
+            </TextField>
+         </children>
+      </HBox>
+      <TableView fx:id="employeeTable" layoutX="297.0" layoutY="42.0" prefHeight="809.0" prefWidth="293.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="297.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="42.0" stylesheets="@../stylesheets/Colors/lightTheme.css" styleClass="surface"/>
+   </children>
+</AnchorPane>

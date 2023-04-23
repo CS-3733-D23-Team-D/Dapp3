@@ -31,13 +31,16 @@
 
 
 
-.filtered-table-view .cell:odd{
+.table-row-cell .table:odd{
+    -fx-background: var(--md-sys-color-primary-fixed-dim);;
+    /*-fx-alternative-row-fill-visible: var(--md-sys-color-primary-fixed-dim);*/
     -fx-text-background-color: #000000;
     -fx-text-fill: #000000;
     -fx-font-family: Roboto;
 }
 
-.filtered-table-view .cell:even{
+.table-row-cell .table:even{
+    -fx-background: var(--md-sys-color-on-primary-container);
     -fx-text-background-color: #000000;
     -fx-text-fill: #000000;
     -fx-font-family: Roboto;

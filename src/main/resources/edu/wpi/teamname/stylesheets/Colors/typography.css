@@ -1,0 +1,63 @@
+.display-large{
+    -fx-font-size: 57px;
+    -fx-font-family: Roboto;
+    -fx-font-style: normal;
+    -fx-line-height: 64px;
+    -fx-letter-spacing: -.25px;
+}
+.display-med{
+    -fx-font-size: 45px;
+    -fx-font-family: Roboto;
+    -fx-font-style: normal;
+    -fx-line-height: 52px;
+    -fx-letter-spacing: 0px;
+}
+.display-small{
+    -fx-font-size: 36px;
+    -fx-font-family: Roboto;
+    -fx-font-style: normal;
+    -fx-line-height: 44px;
+    -fx-letter-spacing: 0px;
+}
+.headline-large{
+    -fx-font-size: 32px;
+    -fx-font-family: Roboto;
+    -fx-font-style: normal;
+    -fx-line-height: 40px;
+    -fx-letter-spacing: 0px;
+}
+.headline-med{
+    -fx-font-size: 28px;
+    -fx-font-family: Roboto;
+    -fx-font-style: normal;
+    -fx-line-height: 36px;
+    -fx-letter-spacing: 0px;
+}
+.title-large{
+    -fx-font-size: 22px;
+    -fx-font-family: Roboto;
+    -fx-font-style: normal;
+    -fx-line-height: 28px;
+    -fx-letter-spacing: 0px;
+}
+.title-med{
+    -fx-font-size: 16px;
+    -fx-font-family: Roboto Medium;
+    /*-fx-font-style: ;*/
+    -fx-line-height: 24px;
+    -fx-letter-spacing: 0.15px;
+}
+.label-large{
+    -fx-font-size: 14px;
+    -fx-font-family: Roboto Medium;
+    /*-fx-font-style: ;*/
+    -fx-line-height: 20px;
+    -fx-letter-spacing: 0.10px;
+}
+.body-large{
+    -fx-font-size: 16px;
+    -fx-font-family: Roboto;
+    -fx-font-style: normal;
+    -fx-line-height: 24px;
+    -fx-letter-spacing: 0.50px;
+}

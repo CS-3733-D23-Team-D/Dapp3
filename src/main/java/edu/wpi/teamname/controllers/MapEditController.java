@@ -2,15 +2,14 @@ package edu.wpi.teamname.controllers;
 
 import edu.wpi.teamname.App;
 import edu.wpi.teamname.database.DataManager;
-import edu.wpi.teamname.navigation.LocationName;
-import edu.wpi.teamname.navigation.Map;
-import edu.wpi.teamname.navigation.Node;
+import edu.wpi.teamname.navigation.*;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -32,12 +32,13 @@ public class MapEditController {
 
   Map map;
   @FXML GesturePane gp;
-  @FXML TableView table;
+  @FXML TableView<LocationName> table;
   @FXML AnchorPane anchor;
   @FXML MFXButton exportButton;
   @FXML MFXButton importButton;
   @FXML MFXButton addNodeButton;
   @FXML MFXButton addLocationButton;
+  @FXML MFXButton addEdgeButton;
   @FXML MFXButton toggleTableButton;
   @FXML TableColumn longNameColumn;
   @FXML TableColumn shortNameColumn;
@@ -48,6 +49,10 @@ public class MapEditController {
 
   @FXML MFXButton downFloor;
   @FXML MFXButton upFloor;
+
+  @FXML HBox floorSelector;
+
+  @FXML AnchorPane OuterMapAnchor;
 
   String defaultFloor = "L1";
   int defaultX = 0;
@@ -274,9 +279,13 @@ public class MapEditController {
 
           try {
             DataManager.addNode(n);
+            map.setCurrentDisplayFloor(map.getCurrentDisplayFloor(), false);
+            //                        changeFloor();
           } catch (SQLException ex) {
             System.out.println(ex);
             //            throw new RuntimeException(ex);
+          } catch (IOException e) {
+            throw new RuntimeException(e);
           }
         }
       };
@@ -332,12 +341,59 @@ public class MapEditController {
 
           //              Node n = new Node(highestID + 5, xPos, yPos, floor, building);
           LocationName l = new LocationName(longName, shortName, nodeType);
-
           try {
             DataManager.addLocationName(l);
+            map.setCurrentDisplayFloor(map.getCurrentDisplayFloor(), false);
+            ObservableList<LocationName> locations =
+                FXCollections.observableArrayList(DataManager.getAllLocationNames());
+            table.setItems(locations);
+            //            changeFloor();
           } catch (SQLException ex) {
             System.out.println(ex);
             //            throw new RuntimeException(ex);
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+        }
+      };
+
+  EventHandler<MouseEvent> makeNewEdge =
+      new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+          MFXButton SubmitButton = ((MFXButton) event.getSource());
+          VBox v = (VBox) ((SubmitButton.getParent()).getParent());
+
+          int startId = -1;
+          int endId = -1;
+
+          TextField startNodeIdText =
+              (TextField) ((Pane) (v.getChildren().get(0))).getChildren().get(1);
+          TextField endNodeIdText =
+              (TextField) ((Pane) (v.getChildren().get(1))).getChildren().get(1);
+
+          if (!startNodeIdText.getText().equals("")) {
+            startId = Integer.parseInt(startNodeIdText.getText());
+          }
+          if (!endNodeIdText.getText().equals("")) {
+            endId = Integer.parseInt(endNodeIdText.getText());
+          }
+
+          if (!(startId == -1 || endId == -1)) {
+            Edge e = new Edge(startId, endId);
+
+            try {
+              DataManager.addEdge(e);
+              map.setCurrentDisplayFloor(map.getCurrentDisplayFloor(), false);
+              //              changeFloor();
+            } catch (SQLException ex) {
+              System.out.println(ex);
+              //            throw new RuntimeException(ex);
+            } catch (IOException ex) {
+              throw new RuntimeException(ex);
+            }
+          } else {
+            System.out.println("Not enough info to make an edge");
           }
         }
       };
@@ -370,7 +426,9 @@ public class MapEditController {
 
           Submit.setOnMouseClicked(makeNewNode);
 
-          outerPane.getChildren().add(v);
+          //          outerPane.getChildren().add(v);
+          PopOver pop = new PopOver(v);
+          pop.show(addButton);
         }
       };
 
@@ -412,7 +470,39 @@ public class MapEditController {
 
           Submit.setOnMouseClicked(makeNewLocation);
 
-          outerPane.getChildren().add(v);
+          //          outerPane.getChildren().add(v);
+          PopOver pop = new PopOver(v);
+          pop.show(addButton);
+        }
+      };
+
+  EventHandler<MouseEvent> addEdgePopup =
+      new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+          MFXButton addButton = ((MFXButton) event.getSource());
+
+          final var resource = App.class.getResource("views/EditEdge.fxml");
+          // StartNodeID, EndNodeID, RemoveEdge, Submit
+          final FXMLLoader loader = new FXMLLoader(resource);
+
+          VBox v;
+
+          try {
+            v = loader.load();
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+
+          MFXButton Submit = (MFXButton) ((Pane) (v.getChildren().get(2))).getChildren().get(1);
+
+          // Remove Remove Button
+          ((Pane) (v.getChildren().get(2))).getChildren().remove(0);
+
+          Submit.setOnMouseClicked(makeNewEdge);
+
+          PopOver pop = new PopOver(v);
+          pop.show(addButton);
         }
       };
 
@@ -427,12 +517,18 @@ public class MapEditController {
 
             table.setVisible(false);
             table.setDisable(true);
+
+            floorSelector.setVisible(true);
+            floorSelector.setDisable(false);
           } else {
             gp.setVisible(false);
             gp.setDisable(true);
 
             table.setVisible(true);
             table.setDisable(false);
+
+            floorSelector.setVisible(false);
+            floorSelector.setDisable(true);
           }
         }
       };
@@ -490,7 +586,8 @@ public class MapEditController {
 
           try {
             DataManager.syncLocationName(l);
-          } catch (SQLException ex) {
+            map.setCurrentDisplayFloor(map.getCurrentDisplayFloor(), false);
+          } catch (SQLException | IOException ex) {
             System.out.println(ex);
             //            throw new RuntimeException(ex);
           }
@@ -516,9 +613,15 @@ public class MapEditController {
 
           try {
             DataManager.deleteLocationName(l);
+            map.setCurrentDisplayFloor(map.getCurrentDisplayFloor(), false);
+            ObservableList<LocationName> locations =
+                FXCollections.observableArrayList(DataManager.getAllLocationNames());
+            table.setItems(locations);
           } catch (SQLException ex) {
             System.out.println(ex);
             //            throw new RuntimeException(ex);
+          } catch (IOException e) {
+            throw new RuntimeException(e);
           }
         }
       };
@@ -548,50 +651,47 @@ public class MapEditController {
             throw new RuntimeException(ex);
           }
 
-          MFXButton Submit = (MFXButton) ((Pane) (v.getChildren().get(7))).getChildren().get(1);
-          Submit.setOnMouseClicked(saveLocationChanges);
-
           MFXButton Remove = (MFXButton) ((Pane) (v.getChildren().get(7))).getChildren().get(0);
+          Remove.setText("Remove Location");
+
           Remove.setOnMouseClicked(removeLocation);
 
-          TextField locationText =
-              (TextField) ((Pane) (v.getChildren().get(0))).getChildren().get(1);
-          locationText.setText(currLocation.getLongName());
-          TextField shortNameText =
-              (TextField) ((Pane) (v.getChildren().get(5))).getChildren().get(1);
-          shortNameText.setText(currLocation.getShortName());
-          TextField nodeTypeText =
-              (TextField) ((Pane) (v.getChildren().get(6))).getChildren().get(1);
-          nodeTypeText.setText(currLocation.getNodeType());
+          ((Pane) (v.getChildren().get(7))).getChildren().remove(1);
 
-          //                ((Pane) (v.getChildren().get(7))).getChildren().remove(0);
+          v.getChildren().remove(6);
+          v.getChildren().remove(5);
           v.getChildren().remove(4);
           v.getChildren().remove(3);
           v.getChildren().remove(2);
           v.getChildren().remove(1);
+          v.getChildren().remove(0);
 
           PopOver pop = new PopOver(v);
           pop.show(row);
         }
       };
 
+  public void changeFloor() {
+    System.out.println("CF");
+    String floor = FloorSelect.getValue();
+    System.out.println(floor);
+
+    try {
+      map.setCurrentDisplayFloor(floor, false);
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   EventHandler<ActionEvent> triggerChangeFloor =
       new EventHandler<ActionEvent>() {
 
         @Override
         public void handle(ActionEvent event) {
-          System.out.println("CF");
-          String floor = FloorSelect.getValue();
-          System.out.println(floor);
 
-          try {
-            map.setCurrentDisplayFloor(floor);
-          } catch (SQLException e) {
-            throw new RuntimeException(e);
-          } catch (IOException e) {
-            throw new RuntimeException(e);
-          }
-
+          changeFloor();
           // Update Nodes
         }
       };
@@ -605,10 +705,10 @@ public class MapEditController {
 
           ObservableList<String> floors = map.getAllFloors();
           int currFlorIndex = floors.indexOf(map.getCurrentDisplayFloor());
-          String newFloor = floors.get((currFlorIndex + 1) % floors.size());
+          String newFloor = floors.get(((currFlorIndex + 1) % floors.size()));
 
           try {
-            map.setCurrentDisplayFloor(newFloor);
+            map.setCurrentDisplayFloor(newFloor, false);
           } catch (SQLException e) {
             throw new RuntimeException(e);
           } catch (IOException e) {
@@ -626,10 +726,10 @@ public class MapEditController {
 
           ObservableList<String> floors = map.getAllFloors();
           int currFlorIndex = floors.indexOf(map.getCurrentDisplayFloor());
-          String newFloor = floors.get((currFlorIndex - 1) % floors.size());
+          String newFloor = floors.get(((currFlorIndex - 1) % floors.size()));
 
           try {
-            map.setCurrentDisplayFloor(newFloor);
+            map.setCurrentDisplayFloor(newFloor, false);
           } catch (SQLException e) {
             throw new RuntimeException(e);
           } catch (IOException e) {
@@ -645,7 +745,8 @@ public class MapEditController {
 
     gp.setMinScale(0.11);
 
-    map.centerAndZoom(gp);
+    //    map.centerAndZoom(gp, OuterMapAnchor);
+    Platform.runLater(() -> map.centerAndZoom(gp, OuterMapAnchor));
 
     ParentController.titleString.set("Map");
 
@@ -666,17 +767,92 @@ public class MapEditController {
     importButton.setOnMouseClicked(importCSV);
     addNodeButton.setOnMouseClicked(addNodePopup);
     addLocationButton.setOnMouseClicked(addLocationPopup);
+    addEdgeButton.setOnMouseClicked(addEdgePopup);
     toggleTableButton.setOnMouseClicked(toggleTable);
 
     //    table;
-    ObservableList<LocationName> locations =
-        FXCollections.observableArrayList(DataManager.getAllLocationNames());
 
     longNameColumn.setCellValueFactory(new PropertyValueFactory<LocationName, String>("longName"));
     shortNameColumn.setCellValueFactory(
         new PropertyValueFactory<LocationName, String>("shortName"));
     nodeTypeColumn.setCellValueFactory(new PropertyValueFactory<LocationName, String>("nodeType"));
 
+    table.setEditable(true);
+
+    longNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+    shortNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+    nodeTypeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+    //        longNameColumn.setOnEditCommit(
+    //          (TableColumn.CellEditEvent<LocationName, String> t) -> {
+    //            LocationName l = t.getTableView().getItems().get(t.getTablePosition().getRow());
+    //            l.setLongName(t.getNewValue());
+    //            try {
+    //              DataManager.syncLocationName(l);
+    //            } catch (SQLException e) {
+    //              System.err.println("Error updating long name: " + e.getMessage());
+    //            }
+    //          });
+
+    longNameColumn.setOnEditCommit(
+        new EventHandler<TableColumn.CellEditEvent>() {
+          @Override
+          public void handle(TableColumn.CellEditEvent event) {
+            LocationName l =
+                (LocationName)
+                    event.getTableView().getItems().get(event.getTablePosition().getRow());
+            l.setLongName((String) event.getNewValue());
+            try {
+              DataManager.syncLocationName(l);
+              map.setCurrentDisplayFloor(map.getCurrentDisplayFloor(), false);
+            } catch (SQLException e) {
+              System.err.println("Error updating long name: " + e.getMessage());
+            } catch (IOException e) {
+              throw new RuntimeException(e);
+            }
+          }
+        });
+
+    shortNameColumn.setOnEditCommit(
+        new EventHandler<TableColumn.CellEditEvent>() {
+          @Override
+          public void handle(TableColumn.CellEditEvent event) {
+            LocationName l =
+                (LocationName)
+                    event.getTableView().getItems().get(event.getTablePosition().getRow());
+            l.setShortName((String) event.getNewValue());
+            try {
+              DataManager.syncLocationName(l);
+              map.setCurrentDisplayFloor(map.getCurrentDisplayFloor(), false);
+            } catch (SQLException e) {
+              System.err.println("Error updating long name: " + e.getMessage());
+            } catch (IOException e) {
+              throw new RuntimeException(e);
+            }
+          }
+        });
+
+    nodeTypeColumn.setOnEditCommit(
+        new EventHandler<TableColumn.CellEditEvent>() {
+          @Override
+          public void handle(TableColumn.CellEditEvent event) {
+            LocationName l =
+                (LocationName)
+                    event.getTableView().getItems().get(event.getTablePosition().getRow());
+            l.setNodeType((String) event.getNewValue());
+            try {
+              DataManager.syncLocationName(l);
+              map.setCurrentDisplayFloor(map.getCurrentDisplayFloor(), false);
+            } catch (SQLException e) {
+              System.err.println("Error updating long name: " + e.getMessage());
+            } catch (IOException e) {
+              throw new RuntimeException(e);
+            }
+          }
+        });
+
+    ObservableList<LocationName> locations =
+        FXCollections.observableArrayList(DataManager.getAllLocationNames());
     table.setItems(locations);
 
     table.setRowFactory(

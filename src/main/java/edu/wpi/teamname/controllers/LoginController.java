@@ -12,6 +12,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
@@ -27,6 +28,7 @@ public class LoginController {
   @FXML MFXTextField loginText;
   @FXML PasswordField passwordText;
   @FXML MFXButton cancel;
+  @FXML MFXButton help;
 
   /**
    * handles when the login button is pressed
@@ -54,6 +56,7 @@ public class LoginController {
   /** initializes the view for the login page */
   @FXML
   public void initialize() {
+    help.setVisible(false);
     newPassword.setVisible(false);
     success.setText("Username or password\nis incorrect");
     success.setVisible(false);
@@ -93,6 +96,24 @@ public class LoginController {
           }
         });
     cancel.setOnMouseClicked(event -> Navigation.navigate(GlobalVariables.getPreviousScreen()));
+
+    passwordText.setOnKeyPressed(
+        event -> {
+          if (event.getCode() == KeyCode.ENTER
+              && !passwordText.textProperty().equals("")
+              && !loginText.textProperty().equals("")) {
+            try {
+              boolean temp = loginPressed(loginText.getText(), passwordText.getText());
+              if (!temp) {
+                paneOfStuff.setDisable(true);
+                success.setVisible(true);
+                passwordText.clear();
+              }
+            } catch (SQLException e) {
+              throw new RuntimeException(e);
+            }
+          }
+        });
   }
 
   /**

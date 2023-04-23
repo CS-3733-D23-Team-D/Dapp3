@@ -4,7 +4,8 @@ public enum RequestType {
   MEAL("MEAL"),
   FLOWER("FLOWER"),
   OFFICESUPPLY("OFFICESUPPLY"),
-  FURNITURE("FURNITURE");
+  FURNITURE("FURNITURE"),
+  MEDICALSUPPLY("MEDICALSUPPLY");
 
   private final String type;
 
@@ -26,6 +27,8 @@ public enum RequestType {
       return "Office Supply Request";
     } else if (this.getString().equals("FURNITURE")) {
       return "Furniture Request";
+    } else if (this.getString().equals("MEDICALSUPPLY")) {
+      return "Medical Supply Request";
     } else {
       return "";
     }

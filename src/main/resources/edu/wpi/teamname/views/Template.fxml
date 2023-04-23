@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -11,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane styleClass="body" stylesheets="@../stylesheets/Template_Background.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teamname.controllers.ParentController">
+<AnchorPane styleClass="surface-container" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teamname.controllers.ParentController">
    <children>
       <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <VBox alignment="CENTER" styleClass="body" stylesheets="@../stylesheets/SideBar.css" HBox.hgrow="NEVER">
@@ -19,14 +20,14 @@
                <AnchorPane maxHeight="75.0" maxWidth="53.0" minHeight="75.0" minWidth="53.0" prefHeight="75.0" prefWidth="53.0" styleClass="body" stylesheets="@../stylesheets/logoScale.css">
                   <children>
                   </children></AnchorPane>
-               <VBox alignment="CENTER" styleClass="body" stylesheets="@../stylesheets/SideBar.css" VBox.vgrow="ALWAYS">
+               <VBox alignment="CENTER" styleClass="surface-container" stylesheets="@../stylesheets/SideBar.css" VBox.vgrow="ALWAYS">
                   <children>
-                     <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="surface-container">
                         <image>
                            <Image url="@../images/MenuIcons/Name 1.png" />
                         </image>
                      </ImageView>
-                     <MFXButton fx:id="homeButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" stylesheets="@../stylesheets/SideBar.css" text="Home" textFill="#1a1c1e">
+                     <MFXButton fx:id="homeButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="surface-container" stylesheets="@../stylesheets/SideBar.css" text="Home" textFill="#1a1c1e">
                         <font>
                            <Font name="Roboto" size="22.0" />
                         </font>
@@ -36,7 +37,7 @@
                            </ImageView>
                         </graphic>
                      </MFXButton>
-                     <MFXButton fx:id="mapButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" text="Map" textFill="#1a1c1e">
+                     <MFXButton fx:id="mapButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="surface-container" text="Map" textFill="#1a1c1e">
                         <font>
                            <Font name="Roboto" size="22.0" />
                         </font>
@@ -46,27 +47,27 @@
                            </ImageView>
                         </graphic>
                      </MFXButton>
-                     <MFXButton fx:id="directionsButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" text="Directions" textFill="#1a1c1e" textOverrun="CLIP">
+                     <MFXButton fx:id="makeRequestsButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="surface-container" text="Make Requests" textFill="#1a1c1e" textOverrun="CLIP" wrapText="true">
                         <font>
                            <Font name="Roboto" size="22.0" />
                         </font>
                         <graphic>
                            <ImageView>
-                              <Image url="@../images/MenuIcons/compare_arrows.png" />
+                              <Image url="@../images/MenuIcons/assignment.png" />
                            </ImageView>
                         </graphic>
                      </MFXButton>
-                     <MFXButton fx:id="editMapButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" text="Edit Map" textFill="#1a1c1e" textOverrun="CLIP" wrapText="true">
+                     <MFXButton fx:id="showRequestsButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="surface-container" text="View Requests" textFill="#1a1c1e" textOverrun="CLIP" wrapText="true">
                         <font>
                            <Font name="Roboto" size="22.0" />
                         </font>
                         <graphic>
                            <ImageView>
-                              <Image url="@../images/MenuIcons/edit_location_alt.png" />
+                              <Image url="@../images/MenuIcons/edit_note.png" />
                            </ImageView>
                         </graphic>
                      </MFXButton>
-                     <MFXButton fx:id="editMoveButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="263.0" maxWidth="1.7976931348623157E308" text="Edit Move" textFill="#1a1c1e" textOverrun="CLIP" wrapText="true">
+                     <MFXButton fx:id="editMoveButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="263.0" maxWidth="1.7976931348623157E308" styleClass="surface-container" text="View Moves" textFill="#1a1c1e" textOverrun="CLIP" wrapText="true">
                         <font>
                            <Font name="Roboto" size="22.0" />
                         </font>
@@ -78,40 +79,52 @@
                            </ImageView>
                         </graphic>
                      </MFXButton>
-                     <MFXButton fx:id="makeRequestsButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" text="Make Requests" textFill="#1a1c1e" textOverrun="CLIP" wrapText="true">
+<!--                     <MFXButton fx:id="directionsButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="surface-container" text="Directions" textFill="#1a1c1e" textOverrun="CLIP">-->
+<!--                        <font>-->
+<!--                           <Font name="Roboto" size="22.0" />-->
+<!--                        </font>-->
+<!--                        <graphic>-->
+<!--                           <ImageView>-->
+<!--                              <Image url="@../images/MenuIcons/compare_arrows.png" />-->
+<!--                           </ImageView>-->
+<!--                        </graphic>-->
+<!--                     </MFXButton>-->
+                     <MFXButton fx:id="editMapButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="surface-container" text="Edit Map" textFill="#1a1c1e" textOverrun="CLIP" wrapText="true">
                         <font>
                            <Font name="Roboto" size="22.0" />
                         </font>
                         <graphic>
                            <ImageView>
-                              <Image url="@../images/MenuIcons/assignment.png" />
+                              <Image url="@../images/MenuIcons/edit_location_alt.png" />
                            </ImageView>
                         </graphic>
                      </MFXButton>
-                     <MFXButton fx:id="showRequestsButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" text="Show Requests" textFill="#1a1c1e" textOverrun="CLIP" wrapText="true">
+                     <MFXButton fx:id="showEmployeesButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="surface-container" text="View Employees" textFill="#1a1c1e" textOverrun="CLIP" wrapText="true">
                         <font>
                            <Font name="Roboto" size="22.0" />
                         </font>
                         <graphic>
                            <ImageView>
-                              <Image url="@../images/MenuIcons/edit_note.png" />
+                              <image>
+                                 <Image url="@../images/MenuIcons/employeetable.png" />
+                              </image>
                            </ImageView>
                         </graphic>
                      </MFXButton>
-                     <AnchorPane styleClass="body" VBox.vgrow="ALWAYS" />
-                     <MFXButton fx:id="helpButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" stylesheets="@../stylesheets/SideBar.css" text="Help" textFill="#1a1c1e">
-                        <font>
-                           <Font name="Roboto" size="22.0" />
-                        </font>
-                        <graphic>
-                           <ImageView>
-                              <Image url="@../images/MenuIcons/help.png" />
-                           </ImageView>
-                        </graphic>
-                     </MFXButton>
+                     <AnchorPane styleClass="surface-container" VBox.vgrow="ALWAYS" />
+<!--                     <MFXButton fx:id="helpButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="surface-container" stylesheets="@../stylesheets/SideBar.css" text="Help" textFill="#1a1c1e">-->
+<!--                        <font>-->
+<!--                           <Font name="Roboto" size="22.0" />-->
+<!--                        </font>-->
+<!--                        <graphic>-->
+<!--                           <ImageView>-->
+<!--                              <Image url="@../images/MenuIcons/help.png" />-->
+<!--                           </ImageView>-->
+<!--                        </graphic>-->
+<!--                     </MFXButton>-->
                      <AnchorPane>
                         <children>
-                           <MFXButton fx:id="logoutButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" text="Logout" textFill="#1a1c1e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <MFXButton fx:id="logoutButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="surface-container" text="Logout" textFill="#1a1c1e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                               <font>
                                  <Font name="Roboto" size="22.0" />
                               </font>
@@ -121,7 +134,7 @@
                                  </ImageView>
                               </graphic>
                            </MFXButton>
-                           <MFXButton fx:id="loginButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" text="Login" textFill="#1a1c1e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <MFXButton fx:id="loginButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="surface-container" text="Login" textFill="#1a1c1e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                               <font>
                                  <Font name="Roboto" size="22.0" />
                               </font>
@@ -133,9 +146,9 @@
                            </MFXButton>
                         </children>
                      </AnchorPane>
-                     <MFXButton fx:id="exitButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="452.0" maxWidth="1.7976931348623157E308" text="Exit" textFill="#1a1c1e">
+                     <MFXButton fx:id="exitButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="452.0" maxWidth="1.7976931348623157E308" styleClass="surface-container" text="Exit" textFill="#1a1c1e">
                         <font>
-                           <Font name="Times New Roman" size="19.0" />
+                           <Font name="Roboto" size="22.0" />
                         </font>
                         <graphic>
                            <ImageView>
@@ -168,7 +181,7 @@
                               <children>
                                  <Label fx:id="titleLabel" maxHeight="96.0" minHeight="96.0" prefHeight="96.0" stylesheets="@../stylesheets/TopBar.css" text="Template Page" VBox.vgrow="ALWAYS">
                                     <padding>
-                                       <Insets left="24.0" />
+                                       <Insets left="10.0" />
                                     </padding>
                                  </Label>
                               </children>
@@ -177,9 +190,13 @@
                      </AnchorPane>
                   </children>
                </StackPane>
-               <HBox style="-fx-background-radius: 16; -fx-border-radius: 16;" VBox.vgrow="ALWAYS" />
+               <HBox style="-fx-background-radius: 16; -fx-border-radius: 16;" styleClass="surface" VBox.vgrow="ALWAYS" />
             </children>
          </VBox>
       </HBox>
    </children>
+   <stylesheets>
+      <URL value="@../stylesheets/Template_Background.css" />
+      <URL value="@../stylesheets/Colors/lightTheme.css" />
+   </stylesheets>
 </AnchorPane>

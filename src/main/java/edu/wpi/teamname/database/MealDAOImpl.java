@@ -141,13 +141,14 @@ public class MealDAOImpl implements MealDAO {
       PreparedStatement statement = connection.prepareStatement(query);
       statement.setInt(1, id);
       ResultSet rs = statement.executeQuery();
-
-      int mealid = rs.getInt("mealID");
-      String name = rs.getString("Name");
-      float price = rs.getFloat("Price");
-      String meall = rs.getString("Meal");
-      String cuisine = rs.getString("Cuisine");
-      meal = (new Meal(mealid, name, price, meall, cuisine));
+      while (rs.next()) {
+        int mealid = rs.getInt("mealID");
+        String name = rs.getString("Name");
+        float price = rs.getFloat("Price");
+        String meall = rs.getString("Meal");
+        String cuisine = rs.getString("Cuisine");
+        meal = (new Meal(mealid, name, price, meall, cuisine));
+      }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }

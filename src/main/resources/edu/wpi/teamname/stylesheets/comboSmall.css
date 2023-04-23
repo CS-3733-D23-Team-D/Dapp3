@@ -1,0 +1,30 @@
+.combo-box-popup .list-view {
+    -fx-font-size: 12px;
+    -fx-font-family: Roboto;
+    -fx-line-height: 36px;
+    /*-fx-background-color: #D5E3FF;
+    -fx-text-fill: #001B3B;*/
+    -fx-background-radius: 8;
+}
+
+/*added this in an edit*/
+.combo-box-popup .list-view .list-cell {
+    -fx-padding: -1 -1 -1 -1;
+    /*-fx-background-color: #D5E3FF;
+    -fx-text-fill: #001B3B;*/
+    -fx-background-radius: 8;
+}
+
+.combo-box{
+    /*-fx-background-color: #D5E3FF;*/
+    -fx-font-size: 12px;
+    -fx-font-family: Roboto Thin;
+    -fx-line-height: 36px;
+    -fx-letter-spacing: 0px;
+    /*-fx-text-fill: #001B3B;*/
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #6F797A;
+    -fx-border-width: 1;
+    -fx-min-height: 30;
+}

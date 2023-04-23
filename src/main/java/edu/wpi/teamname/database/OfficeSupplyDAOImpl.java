@@ -142,13 +142,14 @@ public class OfficeSupplyDAOImpl implements OfficeSupplyDAO {
       PreparedStatement statement = connection.prepareStatement(query);
       statement.setInt(1, id);
       ResultSet rs = statement.executeQuery();
-
-      int mealid = rs.getInt("furnitureID");
-      String name = rs.getString("name");
-      float price = rs.getFloat("price");
-      String category = rs.getString("category");
-      Boolean isElectric = rs.getBoolean("isElectric");
-      officeSupply = (new OfficeSupply(mealid, name, price, category, isElectric));
+      while (rs.next()) {
+        int mealid = rs.getInt("supplyID");
+        String name = rs.getString("name");
+        float price = rs.getFloat("price");
+        String category = rs.getString("category");
+        Boolean isElectric = rs.getBoolean("isElectric");
+        officeSupply = (new OfficeSupply(mealid, name, price, category, isElectric));
+      }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }

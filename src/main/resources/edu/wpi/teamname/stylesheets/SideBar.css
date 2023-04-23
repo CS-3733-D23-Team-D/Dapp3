@@ -1,4 +1,8 @@
-.body{
+
+
+
+
+VBox{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,18 +12,19 @@
     width: 228px;
     height: 1080px;
 
-    -fx-background-color: #FAF9FD;
+    /*-fx-background-color: --md-sys-color-primary;*/
 }
-.button{
-    -fx-background-color: #FAF9FD;
+MFXButton{
+    /*-fx-background-color: #FAF9FD;*/
     -fx-border-color: #6F797A;
-    -fx-font-fill: #1A1C1E;
-    -fx-font-family: --md-sys-typescale-title-medium-font-family-name;
-    -fx-font-style: --md-sys-typescale-title-medium-font-family-style;
-    -fx-font-weight: --md-sys-typescale-title-medium-font-weight;
-    -fx-font-size: --md-sys-typescale-title-medium-font-size;
-    -fx-line-height: --md-sys-typescale-title-medium-line-height;
-    -fx-letter-spacing: --md-sys-typescale-title-medium-letter-spacing;
-    -fx-background-color: #FAF9FD;
+    -fx-border-width: 0 0 2px 0;
+    /*-fx-font-fill: #1A1C1E;*/
+    -fx-font-family: Roboto;
+    /*-fx-font-style: Medium;*/
+    /*-fx-font-weight: 400px;*/
+    -fx-font-size: 16px;
+    -fx-line-height: 24px;
+    -fx-letter-spacing: 0.15px;
+    /*-fx-background-color: #EEEDF1;*/
 
 }

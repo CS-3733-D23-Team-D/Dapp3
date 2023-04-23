@@ -3,3 +3,11 @@ label {
     -fx-background-color: #d9d9d9;
     color:#ffffff
 }
+MFXButton {
+    -fx-background-color:  #235FA6;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color:  #6F797A;
+    -fx-text-fill:  #ffffff;
+    -fx-font-family:  Roboto;
+}

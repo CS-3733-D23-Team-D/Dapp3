@@ -144,14 +144,15 @@ public class FurnitureDAOImpl implements FurnitureDAO {
       PreparedStatement statement = connection.prepareStatement(query);
       statement.setInt(1, id);
       ResultSet rs = statement.executeQuery();
-
-      int mealid = rs.getInt("furnitureID");
-      String name = rs.getString("name");
-      float price = rs.getFloat("price");
-      String category = rs.getString("category");
-      String size = rs.getString("size");
-      String color = rs.getString("color");
-      furniture = (new Furniture(mealid, name, price, category, size, color));
+      while (rs.next()) {
+        int mealid = rs.getInt("furnitureID");
+        String name = rs.getString("name");
+        float price = rs.getFloat("price");
+        String category = rs.getString("category");
+        String size = rs.getString("size");
+        String color = rs.getString("color");
+        furniture = (new Furniture(mealid, name, price, category, size, color));
+      }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }

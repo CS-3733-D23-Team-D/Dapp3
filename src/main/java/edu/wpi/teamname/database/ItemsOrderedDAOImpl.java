@@ -143,11 +143,12 @@ public class ItemsOrderedDAOImpl implements ItemsOrderedDAO {
       statement.setInt(1, requestID);
       statement.setInt(2, itemID);
       ResultSet rs = statement.executeQuery();
-
-      int rID = rs.getInt("requestID");
-      int iID = rs.getInt("itemID");
-      int quantity = rs.getInt("quantity");
-      itemsOrdered = (new ItemsOrdered(rID, iID, quantity));
+      while (rs.next()) {
+        int rID = rs.getInt("requestID");
+        int iID = rs.getInt("itemID");
+        int quantity = rs.getInt("quantity");
+        itemsOrdered = (new ItemsOrdered(rID, iID, quantity));
+      }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }

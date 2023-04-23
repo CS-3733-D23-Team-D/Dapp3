@@ -1,6 +1,6 @@
 package edu.wpi.teamname.database.interfaces;
 
-import edu.wpi.teamname.navigation.Node;
+import edu.wpi.teamname.navigation.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 

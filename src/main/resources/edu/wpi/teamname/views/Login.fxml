@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teamname.controllers.LoginController">
+<AnchorPane fx:id="rootPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" styleClass="secondary-container" stylesheets="@../stylesheets/Colors/lightTheme.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teamname.controllers.LoginController">
     <children>
         <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -28,7 +28,7 @@
                         <VBox alignment="CENTER" maxHeight="550.0" maxWidth="480.0" spacing="18.0" style="-fx-background-color: #EEEDF1;" stylesheets="@../stylesheets/login.css" StackPane.alignment="CENTER">
                             <children>
                         <AnchorPane maxHeight="44.0" maxWidth="400.0" styleClass="body2" stylesheets="@../stylesheets/logoScale.css" VBox.vgrow="ALWAYS" />
-                        <Text fill="#012d5a" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" wrappingWidth="400.0">
+                        <Text fill="#012d5a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="primary-text-container" text="Login" wrappingWidth="400.0">
                            <font>
                               <Font name="Roboto Medium" size="45.0" />
                            </font>
@@ -36,7 +36,7 @@
                               <Insets bottom="6.0" />
                            </VBox.margin>
                         </Text>
-                        <MFXTextField fx:id="loginText" floatMode="DISABLED" maxHeight="57.0" maxWidth="400.0" promptText="Username" style="-fx-background-color: #FAF9FD;" stylesheets="@../stylesheets/login.css">
+                        <MFXTextField fx:id="loginText" floatMode="DISABLED" maxHeight="57.0" maxWidth="400.0" promptText="Username" styleClass="surface" stylesheets="@../stylesheets/login.css">
                            <font>
                               <Font name="Roboto" size="28.0" />
                            </font>
@@ -47,7 +47,7 @@
                               <Insets bottom="6.0" />
                            </VBox.margin>
                         </MFXTextField>
-                        <PasswordField fx:id="passwordText" maxHeight="57.0" maxWidth="400.0" promptText="Password" stylesheets="@../stylesheets/login.css">
+                        <PasswordField fx:id="passwordText" maxHeight="57.0" maxWidth="400.0" promptText="Password" styleClass="surface" stylesheets="@../stylesheets/login.css">
                            <font>
                               <Font name="Roboto" size="28.0" />
                            </font>
@@ -55,7 +55,7 @@
                               <Insets bottom="6.0" />
                            </VBox.margin>
                         </PasswordField>
-                                  <MFXButton fx:id="loginButton" maxHeight="48.0" maxWidth="400.0" prefHeight="48.0" style="-fx-background-color: #001B3B;" stylesheets="@../stylesheets/login.css" text="Sign In" textAlignment="CENTER" textFill="#d5e3ff">
+                                  <MFXButton fx:id="loginButton" maxHeight="48.0" maxWidth="400.0" prefHeight="48.0" styleClass="primary-on-container" stylesheets="@../stylesheets/login.css" text="Sign In" textAlignment="CENTER" textFill="#d5e3ff">
                                       <font>
                                           <Font name="Roboto" size="28.0" />
                                       </font>
@@ -67,7 +67,7 @@
                                     <children>
                               <AnchorPane prefWidth="200.0">
                                  <children>
-                                    <MFXButton fx:id="cancel" maxHeight="44.0" prefHeight="44.0" style="-fx-background-color: #004788;" stylesheets="@../stylesheets/login.css" text="Cancel" textAlignment="CENTER" textFill="#d5e3ff" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <MFXButton fx:id="cancel" maxHeight="44.0" prefHeight="44.0" styleClass="primary" stylesheets="@../stylesheets/login.css" text="Cancel" textAlignment="CENTER" textFill="#d5e3ff" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <font>
                                           <Font name="Roboto" size="24.0" />
                                        </font>
@@ -76,7 +76,7 @@
                               </AnchorPane>
                               <AnchorPane prefWidth="200.0">
                                  <children>
-                                              <MFXButton fx:id="forgotPassword" maxHeight="44.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="44.0" style="-fx-background-color: #d5e3ff;" stylesheets="@../stylesheets/login.css" text="Forgot Password" textAlignment="CENTER" textFill="#004788" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                              <MFXButton fx:id="forgotPassword" maxHeight="44.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="44.0" styleClass="primary-container" stylesheets="@../stylesheets/login.css" text="Forgot Password" textAlignment="CENTER" textFill="#004788" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                   <font>
                                                       <Font name="Roboto" size="24.0" />
                                                   </font>
@@ -109,15 +109,15 @@
         </StackPane>
       <HBox layoutX="319.3333435058594" layoutY="10.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
          <children>
-            <MFXButton fx:id="help" alignment="CENTER" style="-fx-background-radius: 10; -fx-border-radius: 8; -fx-background-color: #001B3B; -fx-border-color: #F6BD38; -fx-border-width: 3;" text="Help" textAlignment="CENTER" textFill="#d5e3ff">
+            <MFXButton fx:id="help" alignment="CENTER" style="-fx-background-radius: 10; -fx-border-radius: 8; -fx-border-color: #F6BD38; -fx-border-width: 3;" styleClass="primary-on-container" text="Help" textAlignment="CENTER" textFill="#d5e3ff">
                <font>
                   <Font size="20.0" />
                </font>
                <HBox.margin>
-                  <Insets right="48.0" />
+                  <Insets right="20.0" />
                </HBox.margin>
             </MFXButton>
-              <MFXButton fx:id="exit" alignment="CENTER" style="-fx-background-radius: 10; -fx-border-radius: 8; -fx-background-color: #001B3B; -fx-border-color: #BA1A1A; -fx-border-width: 3;" text="Exit" textAlignment="CENTER" textFill="#d5e3ff">
+              <MFXButton fx:id="exit" alignment="CENTER" style="-fx-background-radius: 10; -fx-border-radius: 8; -fx-border-color: #BA1A1A; -fx-border-width: 3;" styleClass="primary-on-container" text="Exit" textAlignment="CENTER" textFill="#d5e3ff">
                   <font>
                       <Font size="20.0" />
                   </font>

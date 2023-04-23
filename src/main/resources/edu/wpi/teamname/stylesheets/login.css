@@ -1,9 +1,9 @@
 .button{
     -fx-border-radius: 8;
     -fx-background-radius: 8;
-    -fx-background-color: #D5E3FF;
+    /*-fx-background-color: #D5E3FF;*/
     -fx-border-color: #6F797A;
-    -fx-font-fill: #001B3B;
+    /*-fx-font-fill: #001B3B;*/
     -fx-font-family: --md-sys-typescale-headline-medium-font-family-name;
     -fx-font-style: --md-sys-typescale-headline-medium-font-family-style;
     -fx-font-weight: --md-sys-typescale-headline-medium-font-weight;
@@ -12,11 +12,15 @@
     -fx-letter-spacing: --md-sys-typescale-headline-medium-letter-spacing;
 }
 .label{
-    -fx-text-fill: --md-custom-color-Custom-Color-1;
+    /*-fx-text-fill: --md-custom-color-Custom-Color-1;*/
     -fx-font-family: --md-sys-typescale-display-medium-font-family-name;
     -fx-font-style: --md-sys-typescale-display-medium-font-family-style;
     -fx-font-weight: --md-sys-typescale-display-medium-font-weight;
     -fx-font-size: --md-sys-typescale-display-medium-font-size;
     -fx-line-height: --md-sys-typescale-display-medium-line-height;
     -fx-letter-spacing: --md-sys-typescale-display-medium-letter-spacing;
+}
+.text-field{
+    -fx-background-radius: 8px;
+
 }

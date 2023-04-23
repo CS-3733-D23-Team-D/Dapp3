@@ -51,7 +51,7 @@ public class Flower extends RequestItem {
         setColor(rs.getString("Color"));
       }
     } catch (SQLException e) {
-      System.out.println("Error retrieving meal data: " + e.getMessage());
+      System.out.println("Error retrieving flower data: " + e.getMessage());
       System.out.println(id);
     }
   }

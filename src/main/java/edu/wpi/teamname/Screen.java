@@ -18,7 +18,8 @@ public enum Screen {
 
   MAP_EDIT("views/MapEdit.fxml"),
 
-  MOVE_TABLE("views/MoveTable.fxml");
+  MOVE_TABLE("views/MoveTable.fxml"),
+  EMPLOYEE_TABLE("views/EmployeeTable.fxml");
 
   private final String filename;
 

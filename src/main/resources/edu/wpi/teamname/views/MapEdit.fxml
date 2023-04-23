@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Group?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import net.kurobako.gesturefx.GesturePane?>
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import net.kurobako.gesturefx.*?>
 
-<HBox xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teamname.controllers.MapEditController">
+<HBox style="-fx-background-radius: 16;" styleClass="surface-container" stylesheets="@../stylesheets/Colors/lightTheme.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teamname.controllers.MapEditController">
     <children>
-        <AnchorPane prefHeight="340.0" prefWidth="300.0">
+        <AnchorPane prefHeight="340.0" prefWidth="450.0" style="-fx-background-radius: 16;" styleClass="surface">
             <children>
-                <VBox prefHeight="200.0" prefWidth="323.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <VBox spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
-                        <ComboBox fx:id="selectTable" promptText="Choose Table To Import/Export" style="-fx-background-color: #D5E3ff;" stylesheets="@../stylesheets/combo.css">
+                        <ComboBox fx:id="selectTable" prefWidth="400.0" promptText="Choose Table To Import/Export" stylesheets="@../stylesheets/combo.css">
                             <!--                      <font>-->
                             <!--                          <Font name="Roboto" size="16.0" />-->
                             <!--                      </font>-->
@@ -27,30 +23,59 @@
 
                         <HBox prefHeight="0.0" prefWidth="0.0" spacing="20.0">
                             <children>
-                                <MFXButton fx:id="importButton" style="-fx-background-color: #D5E3ff;" text="Import">
+                                <MFXButton fx:id="importButton" style="-fx-font-size: 18;" stylesheets="@../stylesheets/button.css" text="Import">
                                     <font>
-                                        <Font name="Roboto" size="16.0" />
-                                    </font></MFXButton>
-                                <MFXButton fx:id="exportButton" style="-fx-background-color: #D5E3ff;" text="Export">
+                                        <Font size="18.0" />
+                                    </font>
+                           <styleClass>
+                              <String fx:value="outline" />
+                              <String fx:value="primary" />
+                           </styleClass></MFXButton>
+                                <MFXButton fx:id="exportButton" style="-fx-font-size: 18;" stylesheets="@../stylesheets/button.css" text="Export">
                                     <font>
-                                        <Font name="Roboto" size="16.0" />
-                                    </font></MFXButton>
+                                        <Font size="18.0" />
+                                    </font>
+                           <styleClass>
+                              <String fx:value="primary" />
+                              <String fx:value="outline" />
+                           </styleClass></MFXButton>
                             </children>
                         </HBox>
-                        <MFXButton fx:id="addNodeButton" style="-fx-background-color: #D5E3ff;" text="AddNode">
+                        <MFXButton fx:id="addNodeButton" style="-fx-font-size: 18;" stylesheets="@../stylesheets/button.css" text="AddNode">
                             <font>
-                                <Font name="Roboto" size="16.0" />
+                                <Font size="18.0" />
                             </font>
+                     <styleClass>
+                        <String fx:value="primary" />
+                        <String fx:value="outline" />
+                     </styleClass>
                         </MFXButton>
-                        <MFXButton fx:id="addLocationButton" style="-fx-background-color: #D5E3ff;" text="AddLocation">
+                        <MFXButton fx:id="addLocationButton" style="-fx-font-size: 18;" stylesheets="@../stylesheets/button.css" text="AddLocation">
                             <font>
-                                <Font name="Roboto" size="16.0" />
+                                <Font size="18.0" />
                             </font>
+                     <styleClass>
+                        <String fx:value="primary" />
+                        <String fx:value="outline" />
+                     </styleClass>
                         </MFXButton>
-                        <MFXButton fx:id="toggleTableButton" style="-fx-background-color: #D5E3ff;" text="Modify/Remove Locatoins">
+                  <MFXButton fx:id="addEdgeButton" style="-fx-font-size: 18;" stylesheets="@../stylesheets/button.css" text="AddEdge">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="primary" />
+                        <String fx:value="outline" />
+                     </styleClass>
+                  </MFXButton>
+                        <MFXButton fx:id="toggleTableButton" style="-fx-font-size: 18;" stylesheets="@../stylesheets/button.css" text="Modify/Remove Locations">
                             <font>
-                                <Font name="Roboto" size="16.0" />
+                                <Font size="18.0" />
                             </font>
+                     <styleClass>
+                        <String fx:value="primary" />
+                        <String fx:value="outline" />
+                     </styleClass>
                         </MFXButton>
                     </children>
                     <padding>
@@ -59,7 +84,7 @@
                 </VBox>
             </children>
         </AnchorPane>
-        <AnchorPane id="AP" HBox.hgrow="ALWAYS">
+        <AnchorPane id="AP" fx:id="OuterMapAnchor" HBox.hgrow="ALWAYS">
             <children>
                 <StackPane fx:id="sp" prefHeight="340.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
@@ -67,7 +92,7 @@
                             <content>
                                 <Group>
                                     <children>
-                                        <AnchorPane fx:id="anchor" prefHeight="3400.0" prefWidth="5000.0" styleClass="L1" stylesheets="@../stylesheets/mapCssOptions.css" visible="true" />
+                                        <AnchorPane fx:id="anchor" prefHeight="3400.0" prefWidth="5000.0" style="-fx-background-color: #FAF9FD;" styleClass="L1" stylesheets="@../stylesheets/mapCssOptions.css" visible="true" />
                                     </children>
                                 </Group>
                             </content>
@@ -79,22 +104,22 @@
                                 <TableColumn fx:id="nodeTypeColumn" prefWidth="62.0" text="nodeType" />
                             </columns>
                         </TableView>
-                  <HBox alignment="TOP_CENTER" maxHeight="0.0" maxWidth="0.0" spacing="20.0" StackPane.alignment="TOP_CENTER">
+                  <HBox fx:id="floorSelector" alignment="TOP_CENTER" maxHeight="0.0" maxWidth="0.0" StackPane.alignment="TOP_LEFT">
                      <children>
-                        <MFXButton fx:id="downFloor" prefHeight="50.0" prefWidth="56.0" style="-fx-background-color: #D5E3ff;" text="&lt;">
+                        <MFXButton fx:id="downFloor" prefHeight="63.0" prefWidth="56.0" styleClass="primary-container" text="&lt;">
                            <font>
                               <Font name="Roboto" size="16.0" />
                            </font>
                         </MFXButton>
-                        <ComboBox fx:id="FloorSelect" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #D5E3ff;" stylesheets="@../stylesheets/combo.css" />
-                        <MFXButton fx:id="upFloor" prefHeight="63.0" prefWidth="31.0" style="-fx-background-color: #D5E3ff;" text="&gt;">
+                        <ComboBox fx:id="FloorSelect" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="250.0" stylesheets="@../stylesheets/combo.css" />
+                        <MFXButton fx:id="upFloor" prefHeight="63.0" prefWidth="31.0" styleClass="primary-container" text="&gt;">
                            <font>
                               <Font name="Roboto" size="16.0" />
                            </font>
                         </MFXButton>
                      </children>
                      <StackPane.margin>
-                        <Insets top="20.0" />
+                        <Insets left="24.0" top="24.0" />
                      </StackPane.margin>
                   </HBox>
                     </children>

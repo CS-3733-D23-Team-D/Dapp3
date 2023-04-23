@@ -7,8 +7,8 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
+import org.controlsfx.control.PopOver;
 
 public class NodeCircle {
 
@@ -33,6 +34,9 @@ public class NodeCircle {
 
   private VBox changeBox;
 
+  private Map map;
+  private boolean isMapPage;
+
   /**
    * A NodeCircle is a circle that represents a Node in the GUI. It is composed of two circles, an
    * inner one that is filled with a color that represents the Node type, and an outer one that
@@ -43,10 +47,13 @@ public class NodeCircle {
    * @param n The Node that this NodeCircle represents.
    * @throws IOException If there was an error reading from the FXML file for the Node editing menu.
    */
-  public NodeCircle(Node n, boolean isMapPage, String firstShortName)
+  public NodeCircle(Node n, boolean isMapPage, String firstShortName, Map map)
       throws IOException, SQLException {
     float shiftX = 0; // circleR;
     float shiftY = 0; // circleR;
+
+    this.isMapPage = isMapPage;
+    this.map = map;
 
     this.firstShortName = firstShortName;
 
@@ -56,7 +63,7 @@ public class NodeCircle {
     nodeCords = new Point2D(n.getX(), n.getY());
     nodeID = n.getId();
 
-    ArrayList<LocationName> locations = null;
+    //    ArrayList<LocationName> locations = null;
     // DataManager.getLocationNameByNode(nodeID, Timestamp.from(Instant.now()));
 
     p = new Pane();
@@ -87,12 +94,12 @@ public class NodeCircle {
 
     // Get short name(s) from table
 
-    if (!(locations == null) && locations.size() > 0) {
-      label.setText(locations.get(0).getShortName());
-    } else {
-      //      label.setText(" " + nodeID);
-      label.setText(firstShortName);
-    }
+    //    if (!(locations == null) && locations.size() > 0) {
+    //      label.setText(locations.get(0).getShortName());
+    //    } else {
+    //      label.setText(" " + nodeID);
+    label.setText(firstShortName);
+    //    }
 
     CornerRadii corn = new CornerRadii(7);
     label.setBackground(
@@ -202,18 +209,29 @@ public class NodeCircle {
           TextField Location =
               (TextField) ((Pane) (changeBox.getChildren().get(0))).getChildren().get(1);
 
-          ArrayList<LocationName> locations;
+          HashMap<Integer, ArrayList<LocationName>> map;
           try {
-            locations = null;
-            DataManager.getAllLocationNamesMappedByNode(Timestamp.from(Instant.now()));
+            map =
+                DataManager.getAllLocationNamesMappedByNode(
+                    new Timestamp(System.currentTimeMillis()));
           } catch (SQLException e) {
             throw new RuntimeException(e);
           }
 
-          //          if(l)
-          if (locations.size() > 0) {
-            Location.setText(locations.get(0).getLongName());
+          //          for (Integer key : map.keySet()) {
+          //            System.out.println("Key: " + key + " Val: " + map.get(key));
+          //          }
+          //          System.out.println(map);
+
+          String location;
+
+          if (map.get(nodeID) != null) {
+            //          if (map.get(nodeID).size() > 0) {
+            location = map.get(nodeID).get(0).getLongName();
+          } else {
+            location = "" + nodeID;
           }
+          Location.setText(location);
 
           // Set X
           TextField XText =
@@ -224,14 +242,13 @@ public class NodeCircle {
               (TextField) ((Pane) (changeBox.getChildren().get(2))).getChildren().get(1);
           YText.setText("" + nodeCords.getY());
 
-          Node currNode;
-
+          Node currNode = null;
           try {
-            //            System.out.println("Add");
             currNode = DataManager.getNode(nodeID);
-          } catch (Exception e2) {
-            //            System.out.println("RTE");
-            throw new RuntimeException(e2);
+            //            System.out.println("Done: " + currNode.toString());
+          } catch (SQLException e) {
+            System.out.println("ERROR: " + e.toString());
+            throw new RuntimeException(e);
           }
 
           TextField floorText =
@@ -260,7 +277,12 @@ public class NodeCircle {
 
           System.out.println("AddBox");
 
-          p.getChildren().addAll(changeBox);
+          PopOver pop = new PopOver(changeBox);
+          pop.show(inner);
+
+          //          p.getChildren().addAll(changeBox);
+
+          //
         }
       };
 
@@ -283,7 +305,8 @@ public class NodeCircle {
 
           try {
             DataManager.deleteNode(n);
-          } catch (SQLException ex) {
+            map.setCurrentDisplayFloor(map.getCurrentDisplayFloor(), isMapPage);
+          } catch (SQLException | IOException ex) {
             System.out.println(ex);
           }
         }
@@ -304,11 +327,11 @@ public class NodeCircle {
           MFXButton SubmitButton = ((MFXButton) event.getSource());
           VBox v = (VBox) ((HBox) SubmitButton.getParent()).getParent();
 
-          TextField xText = (TextField) ((Pane) (v.getChildren().get(0))).getChildren().get(1);
-          TextField yText = (TextField) ((Pane) (v.getChildren().get(1))).getChildren().get(1);
-          TextField floorText = (TextField) ((Pane) (v.getChildren().get(2))).getChildren().get(1);
+          TextField xText = (TextField) ((Pane) (v.getChildren().get(1))).getChildren().get(1);
+          TextField yText = (TextField) ((Pane) (v.getChildren().get(2))).getChildren().get(1);
+          TextField floorText = (TextField) ((Pane) (v.getChildren().get(3))).getChildren().get(1);
           TextField buildingText =
-              (TextField) ((Pane) (v.getChildren().get(3))).getChildren().get(1);
+              (TextField) ((Pane) (v.getChildren().get(4))).getChildren().get(1);
 
           Node currNode = null;
           try {
@@ -349,8 +372,11 @@ public class NodeCircle {
 
           try {
             DataManager.syncNode(n);
+            map.setCurrentDisplayFloor(map.getCurrentDisplayFloor(), isMapPage);
           } catch (SQLException ex) {
             System.out.println(ex);
+          } catch (IOException e) {
+            throw new RuntimeException(e);
           }
 
           System.out.println("DONE SYNC");

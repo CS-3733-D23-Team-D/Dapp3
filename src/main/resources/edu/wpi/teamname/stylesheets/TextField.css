@@ -1,0 +1,33 @@
+Label{
+    -fx-font-family: Roboto;
+    -fx-font-style: normal;
+    /*-fx-font-weight: 400px;*/
+    -fx-font-size: 28px;
+    -fx-line-height: 36px;
+    -fx-letter-spacing: 0px;
+    -fx-text-fill: #001B3B;
+}
+
+
+
+Textfield{
+    -fx-font-family: Roboto;
+    -fx-font-style: Normal;
+    /*-fx-font-weight: 400px;*/
+    -fx-font-size: 28;
+    -fx-line-height: 36;
+    -fx-letter-spacing:0px;
+    /*-fx-text-fill:  #001B3B;*/
+    /*-fx-font-fill:  #001B3B;*/
+    /*-fx-background-color: #D5E3FF;*/
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    /*-fx-border-color: #6F797A;*/
+    -fx-border-width: 1;
+    -fx-min-height: 60;
+}
+.text-field{
+    -fx-border-radius: 8;
+    -fx-border-color: #6F797A;
+    -fx-border-width: 1;
+}
