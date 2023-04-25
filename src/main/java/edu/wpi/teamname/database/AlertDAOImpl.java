@@ -3,9 +3,6 @@ package edu.wpi.teamname.database;
 import edu.wpi.teamname.alerts.Alert;
 import edu.wpi.teamname.database.interfaces.AlertDAO;
 import edu.wpi.teamname.employees.EmployeeType;
-import edu.wpi.teamname.servicerequest.ServiceRequest;
-
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
@@ -149,33 +146,32 @@ public class AlertDAOImpl implements AlertDAO {
     }
   }
 
-
   public static void exportAlertToCSV(String csvFilePath) throws SQLException, IOException {
     AlertDAOImpl AlertDao = new AlertDAOImpl();
     ArrayList<Alert> alerts = AlertDao.getAll();
 
     FileWriter writer = new FileWriter(csvFilePath);
     writer.write(
-            "Alert ID,Creator Name,Start Date,End Date,Employee Type,Announcement,Description,Urgency\n");
+        "Alert ID,Creator Name,Start Date,End Date,Employee Type,Announcement,Description,Urgency\n");
 
     for (Alert al : alerts) {
       writer.write(
-              al.getId()
-                      + ","
-                      + al.getCreator()
-                      + ","
-                      + al.getStartDisplayDate()
-                      + ","
-                      + al.getEndDisplayDate()
-                      + ","
-                      + al.getType()
-                      + ","
-                      + al.getAnnouncement()
-                      + ","
-                      + al.getDescription()
-                      + ","
-                      + al.getUrgency()
-                      + "\n");
+          al.getId()
+              + ","
+              + al.getCreator()
+              + ","
+              + al.getStartDisplayDate()
+              + ","
+              + al.getEndDisplayDate()
+              + ","
+              + al.getType()
+              + ","
+              + al.getAnnouncement()
+              + ","
+              + al.getDescription()
+              + ","
+              + al.getUrgency()
+              + "\n");
     }
     writer.close();
   }
@@ -191,16 +187,15 @@ public class AlertDAOImpl implements AlertDAO {
       ResultSet tables = dbm.getTables(null, null, "Node", null);
       if (!tables.next()) {
         PreparedStatement createTableStatement =
-                connection.prepareStatement(
-                        "CREATE TABLE \"Alert\" (\"alertID\" INTEGER NOT NULL, \"startDate\" TIMESTAMP NOT NULL, \"endDate\" TIMESTAMP NOT NULL, \"creator\" VARCHAR(30) NOT NULL, \"description\" VARCHAR(256) NOT NULL, \"announcement\" VARCHAR(64) NOT NULL, \"employeeType\" VARCHAR(20) NOT NULL, \"urgency\" VARCHAR(10), PRIMARY KEY (\"alertID\"))");
+            connection.prepareStatement(
+                "CREATE TABLE \"Alert\" (\"alertID\" INTEGER NOT NULL, \"startDate\" TIMESTAMP NOT NULL, \"endDate\" TIMESTAMP NOT NULL, \"creator\" VARCHAR(30) NOT NULL, \"description\" VARCHAR(256) NOT NULL, \"announcement\" VARCHAR(64) NOT NULL, \"employeeType\" VARCHAR(20) NOT NULL, \"urgency\" VARCHAR(10), PRIMARY KEY (\"alertID\"))");
         createTableStatement.executeUpdate();
       }
 
       String query =
-              "INSERT INTO \"Alert\" (\"alertID\", \"startDate\", \"endDate\", \"creator\", \"description\", \"announcement\", \"employeeType\", \"urgency\") "
-                      + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-      PreparedStatement statement =
-              connection.prepareStatement("TRUNCATE TABLE \"ALERT\";");
+          "INSERT INTO \"Alert\" (\"alertID\", \"startDate\", \"endDate\", \"creator\", \"description\", \"announcement\", \"employeeType\", \"urgency\") "
+              + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+      PreparedStatement statement = connection.prepareStatement("TRUNCATE TABLE \"ALERT\";");
       statement.executeUpdate();
       statement = connection.prepareStatement(query);
 
@@ -223,7 +218,7 @@ public class AlertDAOImpl implements AlertDAO {
         java.sql.Date date2 = new java.sql.Date(parsedDate2.getTime());
         statement.setDate(3, date2);
         statement.setString(4, row[3]);
-        statement.setString(5,  row[4]);
+        statement.setString(5, row[4]);
         statement.setString(6, row[5]);
         statement.setString(7, row[6]);
         statement.setString(8, row[7]);

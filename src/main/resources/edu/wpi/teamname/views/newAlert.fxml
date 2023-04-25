@@ -36,6 +36,7 @@
             <String fx:value="popup" />
             <String fx:value="label-med" />
             <String fx:value="primary-container" />
+             <String fx:value="text-area" />
          </styleClass>
         </TextArea>
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">

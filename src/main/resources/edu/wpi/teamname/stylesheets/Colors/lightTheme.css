@@ -111,4 +111,18 @@
     -fx-font-family: Roboto;
 }
 
+.text-area {
+    background-color: #D5E3FF;
+    text-area-background: #D5E3FF ;
+    -fx-text-background-color: #000000;
+    -fx-font-family: Roboto;
+    -fx-font-style: Normal;
+    -fx-font-size: 28;
+    -fx-line-height: 36;
+    -fx-letter-spacing:0px;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-min-height: 60;
+}
 

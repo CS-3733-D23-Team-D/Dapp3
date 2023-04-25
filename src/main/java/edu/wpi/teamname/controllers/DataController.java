@@ -91,7 +91,7 @@ public class DataController implements Initializable {
               // DataManager.upload(csvFile.getPath());
               break;
             case "Alert":
-               DataManager.uploadAlert(csvFile.getPath());
+              DataManager.uploadAlert(csvFile.getPath());
               break;
             case "Employee":
               DataManager.uploadEmployee(csvFile.getPath());
@@ -171,7 +171,7 @@ public class DataController implements Initializable {
               break;
             case "Alert":
               fileChooser.setInitialFileName("alert.csv");
-               DataManager.exportAlertToCSV(csvFile.getPath());
+              DataManager.exportAlertToCSV(csvFile.getPath());
               break;
             case "Employee":
               fileChooser.setInitialFileName("employee.csv");

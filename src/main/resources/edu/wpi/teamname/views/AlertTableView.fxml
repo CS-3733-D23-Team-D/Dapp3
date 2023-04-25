@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.*?>
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="alertTableViewPage" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teamname.controllers.AlertTableViewController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../stylesheets/Colors/lightTheme.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teamname.controllers.AlertTableViewController">
    <children>
       <HBox style="-fx-background-radius: 16;" styleClass="surface" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <VBox HBox.hgrow="ALWAYS">
@@ -81,22 +91,24 @@
                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         </rowConstraints>
                         <children>
-                           <MFXButton fx:id="backButton" disable="true" minWidth="150.0" style="-fx-background-radius: 100; -fx-border-radius: 100; -fx-border-color: #6F797A; -fx-text-fill: #ffffff; -fx-font-family: Roboto;" stylesheets="@../stylesheets/button.css" text="Back" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <MFXButton fx:id="backButton" disable="true" minWidth="150.0" stylesheets="@../stylesheets/button.css" text="Back" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
                               <font>
                                  <Font name="Roboto" size="36.0" />
                               </font>
                               <styleClass>
                                  <String fx:value="primary" />
                                  <String fx:value="headline-med" />
+                                 <String fx:value="outline" />
                               </styleClass>
                            </MFXButton>
-                           <MFXButton fx:id="ViewButton" disable="true" maxWidth="183.0" minHeight="83.0" minWidth="83.0" style="-fx-background-radius: 100; -fx-border-radius: 100; -fx-border-color: #6F797A; -fx-text-fill: #ffffff; -fx-font-family: Roboto; -fx-font-size: 20;" stylesheets="@../stylesheets/button.css" text="View Order #" textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <MFXButton fx:id="ViewButton" disable="true" maxWidth="183.0" minHeight="83.0" minWidth="83.0" stylesheets="@../stylesheets/button.css" text="View Order #" textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                               <font>
                                  <Font name="Roboto" size="36.0" />
                               </font>
                               <styleClass>
                                  <String fx:value="primary" />
                                  <String fx:value="headline-med" />
+                                 <String fx:value="outline" />
                               </styleClass>
                            </MFXButton>
                         </children>
@@ -128,14 +140,14 @@
                                  <Insets top="10.0" />
                               </HBox.margin>
                            </Label>
-                           <TextField fx:id="searchTextField" stylesheets="@../stylesheets/TextField.css">
+                           <TextField fx:id="searchTextField" styleClass="primary-container" stylesheets="@../stylesheets/TextField.css">
                               <HBox.margin>
                                  <Insets top="10.0" />
                               </HBox.margin>
                            </TextField>
                         </children>
                      </HBox>
-                     <TableView fx:id="table" styleClass="surface" VBox.vgrow="ALWAYS">
+                     <TableView fx:id="table" styleClass="surface" stylesheets="@../stylesheets/TableViewStuff.css" VBox.vgrow="ALWAYS">
                         <columns>
                            <TableColumn fx:id="notificationIDCol" minWidth="0.0" prefWidth="148.5" text="Notification ID" />
                            <TableColumn fx:id="Description" prefWidth="250.0" text="Description" />
@@ -210,8 +222,4 @@
          </StackPane>
       </HBox>
    </children>
-   <stylesheets>
-      <URL value="@../stylesheets/Colors/lightTheme.css" />
-      <URL value="@../stylesheets/Colors/darkTheme.css" />
-   </stylesheets>
 </AnchorPane>

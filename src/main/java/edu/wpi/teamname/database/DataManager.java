@@ -360,7 +360,6 @@ public class DataManager {
     moveDAO.add(move);
   }
 
-
   /**
    * This method adds a new Node object to the "Node" table in the database.
    *
@@ -525,7 +524,6 @@ public class DataManager {
     EdgeDAOImpl edgeDAO = new EdgeDAOImpl();
     edgeDAO.delete(edge);
   }
-
 
   public static void deleteAlert(Alert alert) throws SQLException {
     AlertDAOImpl alertDAO = new AlertDAOImpl();
@@ -1082,14 +1080,15 @@ public class DataManager {
   public static void uploadEmployee(String path) throws SQLException, ParseException {
     EmployeeDAOImpl.uploadEmployeeToPostgreSQL(path);
   }
-//
-//  /**
-//   * Uploads CSV data to a PostgreSQL database table "EmployeeType"-also creates one if one does not
-//   * exist
-//   *
-//   * @param path a string that represents a file path (/ is illegal so you must use double//)
-//   * @throws SQLException if an error occurs while uploading the data to the database
-//   */
+  //
+  //  /**
+  //   * Uploads CSV data to a PostgreSQL database table "EmployeeType"-also creates one if one does
+  // not
+  //   * exist
+  //   *
+  //   * @param path a string that represents a file path (/ is illegal so you must use double//)
+  //   * @throws SQLException if an error occurs while uploading the data to the database
+  //   */
   /*public static void uploadEmployeeType(String path) throws SQLException, ParseException {
     EmployeeDAOImpl.uploadEmployeeTypeToPostgreSQL(path);
   }*/
@@ -1202,6 +1201,7 @@ public class DataManager {
   public static void exportFurnitureToCSV(String path) throws SQLException, IOException {
     FurnitureDAOImpl.exportFurnitureToCSV(path);
   }
+
   public static void exportAlertToCSV(String path) throws SQLException, IOException {
     AlertDAOImpl.exportAlertToCSV(path);
   }
@@ -1504,8 +1504,6 @@ public class DataManager {
   public static void createMealTable() throws SQLException {
     MealDAOImpl.createTable();
   }
-
-
 
   /**
    * * Creates a table for storing MedicalSupply data if it doesn't already exist
