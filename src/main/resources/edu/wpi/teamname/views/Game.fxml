@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teamname.controllers.Game">
+   <children>
+      <Label fx:id="score" layoutX="14.0" layoutY="14.0" text="Score: 0 ">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+      <Label fx:id="enterSpace" layoutX="483.0" layoutY="510.0" text="Enter Space">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="textSpace" layoutX="320.0" layoutY="316.0" text="WASDSPACEIJKL">
+         <font>
+            <Font size="60.0" />
+         </font>
+      </Label>
+      <MFXButton fx:id="play" layoutX="479.0" layoutY="141.0" text="Play">
+         <font>
+            <Font size="38.0" />
+         </font>
+      </MFXButton>
+   </children>
+</AnchorPane>
