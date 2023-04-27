@@ -46,7 +46,7 @@ public class App extends Application {
     primaryStage.show();
 
     Navigation.navigate(Screen.GAME);
-    //Navigation.navigate(Screen.HOME);
+    // Navigation.navigate(Screen.HOME);
   }
 
   @Override
