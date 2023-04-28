@@ -1,6 +1,8 @@
 package edu.wpi.teamname.database;
 
 import edu.wpi.teamname.alerts.Alert;
+import edu.wpi.teamname.database.interfaces.ConfReservationDAO;
+import edu.wpi.teamname.database.interfaces.SignageDAO;
 import edu.wpi.teamname.employees.Employee;
 import edu.wpi.teamname.employees.EmployeeType;
 import edu.wpi.teamname.navigation.*;
@@ -50,253 +52,136 @@ public class DataManager {
     return connection;
   }
   // ----------------Signage---------
+
+  /**
+   * Gets the kiosks for specific date
+   *
+   * @param date
+   * @return list of Integers which are kiosk id's
+   * @throws SQLException
+   */
   public static ArrayList<Integer> getKiosks(Timestamp date) throws SQLException {
-    ArrayList<Integer> items = new ArrayList<>();
-    Connection connection = DataManager.DbConnection();
-    String query =
-        "Select \"kioskID\"\n" + "From \"Signage\"\n" + "Where \"date\" = ? Group by \"kioskID\"";
-    try (connection) {
-      PreparedStatement statement = connection.prepareStatement(query);
-      statement.setTimestamp(1, date);
-
-      ResultSet rs = statement.executeQuery();
-      while (rs.next()) {
-        int kioskID = rs.getInt("kioskID");
-        items.add(kioskID);
-      }
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    return items;
+    SignageDAO sign = new SignageDAOImpl();
+    return sign.getKiosks(date);
   }
 
+  /**
+   * Gets the specific signage based on kiosk and date
+   *
+   * @param kiosk
+   * @param date
+   * @return list of strings which is the signage
+   * @throws SQLException
+   */
   public static ArrayList<String> getSignage(int kiosk, Timestamp date) throws SQLException {
-    ArrayList<String> items = new ArrayList<>();
-    Connection connection = DataManager.DbConnection();
-    String query = "Select *\n" + "From \"Signage\"\n" + "Where \"kioskID\" = ? AND \"date\" = ?";
-    try (connection) {
-      PreparedStatement statement = connection.prepareStatement(query);
-      statement.setInt(1, kiosk);
-      statement.setTimestamp(2, date);
-
-      ResultSet rs = statement.executeQuery();
-      while (rs.next()) {
-        String lName = rs.getString("longName");
-        String dir = rs.getString("arrowDirection");
-        int kioskID = rs.getInt("kioskID");
-        int signID = rs.getInt("signID");
-
-        items.add(dir + "|" + lName);
-      }
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    return items;
+    SignageDAO sign = new SignageDAOImpl();
+    return sign.getSignage(kiosk, date);
   }
 
-  // --------------------------------
+  // ----------------Unique FUNCTIONS-------------
 
-  // ----------------SAM FUNCTIONS-------------
-  public static ArrayList<Room> getAllRooms() throws SQLException {
-    ArrayList<Room> rooms = null;
-    Connection connection = DataManager.DbConnection();
-    String query =
-        "Select n.\"nodeID\", m.\"longName\", m.date, n.xcoord, n.ycoord, n.floor, n.building, l.\"shortName\", l.\"nodeType\"\n"
-            + "From \"ConfRooms\" c, \"Node\" n, \"Move\" m, \"LocationName\" l\n"
-            + "Where c.\"roomID\" = n.\"nodeID\" AND m.\"nodeID\" = c.\"roomID\" AND m.\"longName\" = l.\"longName\";";
-    try (connection) {
-      PreparedStatement statement = connection.prepareStatement(query);
-      ResultSet rs = statement.executeQuery();
-
-      while (rs.next()) {
-        int nodeID = rs.getInt("resID");
-        String longName = rs.getString("longName");
-        Timestamp date = rs.getTimestamp("date");
-        int xcoord = rs.getInt("xcoord");
-        int ycoord = rs.getInt("ycoord");
-        String floor = rs.getString("building");
-        String building = rs.getString("building");
-        String shortName = rs.getString("shortName");
-        String nodeType = rs.getString("nodeType");
-        Room r =
-            new Room(nodeID, longName, date, xcoord, ycoord, floor, building, shortName, nodeType);
-        rooms.add(r);
-      }
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    return rooms;
-  }
-
+  /**
+   * Gets the specific reservations based off the conference room
+   *
+   * @param confrom
+   * @return list of reservations
+   * @throws SQLException
+   */
   public static ArrayList<ConfReservation> getResForRoom(ConfRoom confrom) throws SQLException {
-    int confID = confrom.getRoomID();
-    ArrayList<ConfReservation> rooms = new ArrayList<>();
-    Connection connection = DataManager.DbConnection();
-    String query = "Select * From \"ConfReservations\" Where \"roomID\" = ?";
-    try (connection) {
-      PreparedStatement statement = connection.prepareStatement(query);
-      statement.setInt(1, confID);
-      ResultSet rs = statement.executeQuery();
-
-      while (rs.next()) {
-        int resID = rs.getInt("resID");
-        String startT = rs.getString("starttime");
-        String endT = rs.getString("endtime");
-        Timestamp dateBook = rs.getTimestamp("datebook");
-        Timestamp dateMade = rs.getTimestamp("dateMade");
-        String name = rs.getString("name");
-        String username = rs.getString("username");
-        String staff = rs.getString("staffAssigned");
-        int roomID = rs.getInt("roomID");
-        ConfReservation res =
-            new ConfReservation(
-                resID, startT, endT, dateBook, dateMade, name, username, staff, roomID);
-        rooms.add(res);
-      }
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    return rooms;
+    ConfReservationDAO confRes = new ConfReservationDAOImpl();
+    return confRes.getResForRoom(confrom);
   }
 
+  /**
+   * adds a reservation to conferenceReservation table
+   *
+   * @param res
+   * @throws SQLException
+   */
   public static void makeReservation(ConfReservation res) throws SQLException {
     addConfReservation(res);
   }
 
   // ----------------Conference Service Req helper functinos-------------
+
+  /**
+   * sets the reservation ID correctly so there is no repeated one
+   *
+   * @return int which is the new resID
+   * @throws SQLException
+   */
   public static int setResID() throws SQLException {
-    int resID = -1;
-    Connection connection = DataManager.DbConnection();
-    String query = "Select max(\"roomID\") From \"ConfReservations\"";
-    try (connection) {
-      PreparedStatement statement = connection.prepareStatement(query);
-      ResultSet rs = statement.executeQuery();
-      rs.next();
-      resID = rs.getInt("resID") + 1;
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    return resID;
+    ConfReservationDAO confRes = new ConfReservationDAOImpl();
+    return confRes.setResID();
   }
 
+  /**
+   * Gets the room ID based off the specific room
+   *
+   * @param room
+   * @return int which is the roomID
+   * @throws SQLException
+   */
   public static int getRoomID(String room) throws SQLException {
-    int roomID = -1;
-    Connection connection = DataManager.DbConnection();
-    String query = "Select roomID\n" + "From \"ConfRooms\"" + "Where \"locationName\" = ?";
-    try (connection) {
-      PreparedStatement statement = connection.prepareStatement(query);
-      statement.setString(1, room);
-      ResultSet rs = statement.executeQuery();
-
-      rs.next();
-      roomID = rs.getInt("roomID");
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    return roomID;
+    ConfRoomDAOImpl confRoom = new ConfRoomDAOImpl();
+    return confRoom.getRoomID(room);
   }
 
+  /**
+   * gets the number of seats based off the room
+   *
+   * @param room
+   * @return int which is seats
+   * @throws SQLException
+   */
   public static int getSeats(String room) throws SQLException {
-    int seats = -1;
-    Connection connection = DataManager.DbConnection();
-    String query = "Select seats\n" + "From \"ConfRooms\"" + "Where \"locationName\" = ?";
-    try (connection) {
-      PreparedStatement statement = connection.prepareStatement(query);
-      statement.setString(1, room);
-      ResultSet rs = statement.executeQuery();
-
-      rs.next();
-      seats = rs.getInt("seats");
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    return seats;
+    ConfRoomDAOImpl confRoom = new ConfRoomDAOImpl();
+    return confRoom.getSeats(room);
   }
 
+  /**
+   * gets list of all the conference buildings
+   *
+   * @return list of strings
+   * @throws SQLException
+   */
   public static ArrayList<String> getConfBuildings() throws SQLException {
-    ArrayList<String> buildings = new ArrayList<>();
-    Connection connection = DataManager.DbConnection();
-    String query =
-        "Select n.building\n"
-            + "From \"Node\" n, \"Move\" m, \"LocationName\" l\n"
-            + "Where n.\"nodeID\" = m.\"nodeID\" AND l.\"longName\" = m.\"longName\" AND l.\"nodeType\" = 'CONF'\n"
-            + "Group by n.building;";
-    try (connection) {
-      PreparedStatement statement = connection.prepareStatement(query);
-      ResultSet rs = statement.executeQuery();
-      while (rs.next()) {
-        String building = rs.getString("building");
-        buildings.add(building);
-      }
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    return buildings;
+    ConfRoomDAOImpl confRoom = new ConfRoomDAOImpl();
+    return confRoom.getConfBuildings();
   }
 
+  /**
+   * gets the conference rooms based on selected building
+   *
+   * @param building
+   * @return list of strings
+   * @throws SQLException
+   */
   public static ArrayList<String> getConfRooms(String building) throws SQLException {
-    ArrayList<String> rooms = new ArrayList<>();
-    Connection connection = DataManager.DbConnection();
-    String queryAll =
-        "Select \"n.nodeID\"\n"
-            + "From \"Node\" n, \"Move\" m, \"LocationName\" l\n"
-            + "Where n.\"nodeID\" = m.\"nodeID\" AND l.\"longName\" = m.\"longName\" AND l.\"nodeType\" = 'CONF'\n";
-    String queryOne =
-        "Select \"n.nodeID\"\n"
-            + "From \"Node\" n, \"Move\" m, \"LocationName\" l\n"
-            + "Where n.\"nodeID\" = m.\"nodeID\" AND l.\"longName\" = m.\"longName\" AND l.\"nodeType\" = 'CONF' AND building = ? \n";
-    PreparedStatement statement;
-    try (connection) {
-
-      if (building.equals("all")) {
-        statement = connection.prepareStatement(queryAll);
-      } else {
-        statement = connection.prepareStatement(queryOne);
-        statement.setString(1, building);
-      }
-
-      ResultSet rs = statement.executeQuery();
-      while (rs.next()) {
-        String build = rs.getString("building");
-        rooms.add(build);
-      }
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-
-    return rooms;
+    ConfRoomDAOImpl confRoom = new ConfRoomDAOImpl();
+    return confRoom.getConfRooms(building);
   }
 
+  /**
+   * fills the conference rooms table based on rest of nodes
+   *
+   * @throws SQLException
+   */
   public static void refreshConfRooms() throws SQLException {
-    Connection connection = DataManager.DbConnection();
-    String query =
-        "Select m.\"nodeID\" as nodeID, ln.\"shortName\" as shortName, n.floor, n.building, max(m.date) as date\n"
-            + "From \"Move\" m, \"Node\" n, \"LocationName\" ln\n"
-            + "Where m.\"nodeID\" = n.\"nodeID\" AND m.\"longName\" = ln.\"longName\" AND m.date <= ? AND ln.\"nodeType\" = ?\n"
-            + "Group by n.building, n.floor, ln.\"shortName\", m.\"nodeID\"";
-    try (connection) {
-      PreparedStatement statement = connection.prepareStatement("TRUNCATE TABLE \"ConfRooms\";");
-      statement.executeUpdate();
-      statement = connection.prepareStatement(query);
-      statement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
-      statement.setString(2, "CONF");
-      ResultSet rs = statement.executeQuery();
-      while (rs.next()) {
-        int roomID = rs.getInt("nodeID");
-        String name =
-            rs.getString("shortName")
-                + ", LVL"
-                + rs.getString("floor")
-                + ", "
-                + rs.getString("building");
-        Random r = new Random();
-        int seats = r.nextInt(20, 100);
-        ConfRoom c = new ConfRoom(roomID, name, seats);
-        addConfRoom(c);
-      }
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
+    ConfRoomDAOImpl confRoom = new ConfRoomDAOImpl();
+    confRoom.refreshConfRooms();
+  }
+
+  /**
+   * gets the items for a specific request
+   *
+   * @param reqID
+   * @return
+   * @throws SQLException
+   */
+  public static ArrayList<ItemsOrdered> getItemsFromReq(int reqID) throws SQLException {
+    ItemsOrderedDAOImpl itemsOrderd = new ItemsOrderedDAOImpl();
+    return itemsOrderd.getItemsFromReq(reqID);
   }
   // -------------------------------------------------------------------------
 
@@ -315,81 +200,6 @@ public class DataManager {
         "teamd",
         "teamd40");
   }
-
-  /*public static ArrayList<Node> getSingleNodeInfo(int nodeID) throws SQLException {
-  /**
-   * Get list of items ordered from a specific ID
-   *
-   * @param reqID
-   * @return ArrayList<ItemsOrdered>
-   * @throws SQLException
-   */
-  public static ArrayList<ItemsOrdered> getItemsFromReq(int reqID) throws SQLException {
-    ArrayList<ItemsOrdered> items = new ArrayList<>();
-    Connection connection = DataManager.DbConnection();
-    String query = "SELECT * FROM \"ItemsOrdered\" WHERE \"requestID\" = ?";
-    try (connection) {
-      PreparedStatement statement = connection.prepareStatement(query);
-      statement.setInt(1, reqID);
-      ResultSet rs = statement.executeQuery();
-      while (rs.next()) {
-        int rID = rs.getInt("requestID");
-        int iID = rs.getInt("itemID");
-        int quantity = rs.getInt("quantity");
-        ItemsOrdered item = new ItemsOrdered(rID, iID, quantity);
-        items.add(item);
-      }
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    return items;
-  }
-
-  public static ArrayList<Node> getSingleNodeInfo(int nodeID) throws SQLException {
-    Connection conn = DbConnection();
-    ArrayList<Node> list = new ArrayList<Node>();
-    String query = "SELECT * FROM \"Node\" Where \"nodeID\" = " + nodeID;
-
-    try (conn) {
-      Statement statement = connection.createStatement();
-      ResultSet rs = statement.executeQuery(query);
-      rs.next();
-      int id = rs.getInt("nodeID");
-      int xcoord = rs.getInt("xcoord");
-      int ycoord = rs.getInt("ycoord");
-      String floor = rs.getString("floor");
-      String building = rs.getString("building");
-      list.add(new Node(id, xcoord, ycoord, floor, building));
-    }
-    return list;
-  }
-
-  /*public static ArrayList<String> getUpdatedNodeInfo(int nodeID, Timestamp date)
-      throws SQLException {
-    Connection conn = DbConnection();
-    ArrayList<String> update = new ArrayList<>();
-    String query =
-        "Select \"longName\", building, floor\n"
-            + "From \"Move\" as m, \"Node\" as n\n"
-            + "Where\n"
-            + "    (n.\"nodeID\" = ?) AND (m.\"nodeID\" = ?) AND\n"
-            + "        m.date = (Select max(date) From \"Move\" Where \"nodeID\" = ? AND date <= ?)";
-    try (PreparedStatement statement = conn.prepareStatement(query); ) {
-      statement.setInt(1, nodeID);
-      statement.setInt(2, nodeID);
-      statement.setInt(3, nodeID);
-      statement.setTimestamp(4, date);
-      ResultSet rs = statement.executeQuery();
-      while (rs.next()) {
-        update.add(rs.getString("\"longName\""));
-        update.add(rs.getString("building"));
-        update.add(rs.getString("floor"));
-      }
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    return update;
-  }*/
   /**
    * Main function to create all Database tables if they don't already exist
    *

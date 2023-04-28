@@ -10,6 +10,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemsOrderedDAOImpl implements ItemsOrderedDAO {
+
+  /**
+   * gets all the items that were ordered in a certain request based on the ID of that request
+   *
+   * @param reqID
+   * @return list of items ordered
+   * @throws SQLException
+   */
+  public ArrayList<ItemsOrdered> getItemsFromReq(int reqID) throws SQLException {
+    ArrayList<ItemsOrdered> items = new ArrayList<>();
+    Connection connection = DataManager.DbConnection();
+    String query = "SELECT * FROM \"ItemsOrdered\" WHERE \"requestID\" = ?";
+    try (connection) {
+      PreparedStatement statement = connection.prepareStatement(query);
+      statement.setInt(1, reqID);
+      ResultSet rs = statement.executeQuery();
+      while (rs.next()) {
+        int rID = rs.getInt("requestID");
+        int iID = rs.getInt("itemID");
+        int quantity = rs.getInt("quantity");
+        ItemsOrdered item = new ItemsOrdered(rID, iID, quantity);
+        items.add(item);
+      }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return items;
+  }
   /**
    * This method updates an existing ItemsOrdered object in the "ItemsOrdered" table in the database
    * with the new ItemsOrdered object.

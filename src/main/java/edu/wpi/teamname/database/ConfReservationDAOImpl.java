@@ -2,6 +2,7 @@ package edu.wpi.teamname.database;
 
 import edu.wpi.teamname.database.interfaces.ConfReservationDAO;
 import edu.wpi.teamname.servicerequest.ConfReservation;
+import edu.wpi.teamname.servicerequest.requestitem.ConfRoom;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,6 +13,72 @@ import java.util.List;
 
 /** LINK FUNCTION TO DATAMANAGER */
 public class ConfReservationDAOImpl implements ConfReservationDAO {
+
+  /**
+   * sets the reservation ID in conference reservations table
+   *
+   * @return int reservationID
+   * @throws SQLException
+   */
+  public int setResID() throws SQLException {
+    int resID = -1;
+    Connection connection = DataManager.DbConnection();
+    String query = "Select max(\"roomID\") From \"ConfReservations\"";
+    try (connection) {
+      PreparedStatement statement = connection.prepareStatement(query);
+      ResultSet rs = statement.executeQuery();
+      rs.next();
+      resID = rs.getInt("resID") + 1;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return resID;
+  }
+
+  /**
+   * Gets all the reservations for a conference rooom in conference reservations table
+   *
+   * @param confrom
+   * @return List of conference reservations
+   * @throws SQLException
+   */
+  public ArrayList<ConfReservation> getResForRoom(ConfRoom confrom) throws SQLException {
+    int confID = confrom.getRoomID();
+    ArrayList<ConfReservation> rooms = new ArrayList<>();
+    Connection connection = DataManager.DbConnection();
+    String query = "Select * From \"ConfReservations\" Where \"roomID\" = ?";
+    try (connection) {
+      PreparedStatement statement = connection.prepareStatement(query);
+      statement.setInt(1, confID);
+      ResultSet rs = statement.executeQuery();
+
+      while (rs.next()) {
+        int resID = rs.getInt("resID");
+        String startT = rs.getString("starttime");
+        String endT = rs.getString("endtime");
+        Timestamp dateBook = rs.getTimestamp("datebook");
+        Timestamp dateMade = rs.getTimestamp("dateMade");
+        String name = rs.getString("name");
+        String username = rs.getString("username");
+        String staff = rs.getString("staffAssigned");
+        int roomID = rs.getInt("roomID");
+        ConfReservation res =
+            new ConfReservation(
+                resID, startT, endT, dateBook, dateMade, name, username, staff, roomID);
+        rooms.add(res);
+      }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return rooms;
+  }
+
+  /**
+   * Syncs the conference reservation table with incoming conference reservation objects
+   *
+   * @param ConfReservation
+   * @throws SQLException
+   */
   @Override
   public void sync(ConfReservation ConfReservation) throws SQLException {
     Connection connection = DataManager.DbConnection();

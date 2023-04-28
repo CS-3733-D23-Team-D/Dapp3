@@ -9,8 +9,163 @@ import java.sql.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ConfRoomDAOImpl implements ConfRomDAO {
+  /**
+   * Gets the buildings of all the conference room node types
+   *
+   * @return list of string
+   * @throws SQLException
+   */
+  public ArrayList<String> getConfBuildings() throws SQLException {
+    ArrayList<String> buildings = new ArrayList<>();
+    Connection connection = DataManager.DbConnection();
+    String query =
+        "Select n.building\n"
+            + "From \"Node\" n, \"Move\" m, \"LocationName\" l\n"
+            + "Where n.\"nodeID\" = m.\"nodeID\" AND l.\"longName\" = m.\"longName\" AND l.\"nodeType\" = 'CONF'\n"
+            + "Group by n.building;";
+    try (connection) {
+      PreparedStatement statement = connection.prepareStatement(query);
+      ResultSet rs = statement.executeQuery();
+      while (rs.next()) {
+        String building = rs.getString("building");
+        buildings.add(building);
+      }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return buildings;
+  }
+
+  /**
+   * Gets the conference rooms base off the building Or gets all the conference rooms if passed in
+   * "all"
+   *
+   * @param building
+   * @return list of string
+   * @throws SQLException
+   */
+  public ArrayList<String> getConfRooms(String building) throws SQLException {
+    ArrayList<String> rooms = new ArrayList<>();
+    Connection connection = DataManager.DbConnection();
+    String queryAll =
+        "Select \"n.nodeID\"\n"
+            + "From \"Node\" n, \"Move\" m, \"LocationName\" l\n"
+            + "Where n.\"nodeID\" = m.\"nodeID\" AND l.\"longName\" = m.\"longName\" AND l.\"nodeType\" = 'CONF'\n";
+    String queryOne =
+        "Select \"n.nodeID\"\n"
+            + "From \"Node\" n, \"Move\" m, \"LocationName\" l\n"
+            + "Where n.\"nodeID\" = m.\"nodeID\" AND l.\"longName\" = m.\"longName\" AND l.\"nodeType\" = 'CONF' AND building = ? \n";
+    PreparedStatement statement;
+    try (connection) {
+
+      if (building.equals("all")) {
+        statement = connection.prepareStatement(queryAll);
+      } else {
+        statement = connection.prepareStatement(queryOne);
+        statement.setString(1, building);
+      }
+
+      ResultSet rs = statement.executeQuery();
+      while (rs.next()) {
+        String build = rs.getString("building");
+        rooms.add(build);
+      }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+
+    return rooms;
+  }
+
+  /**
+   * populates the conference rooms table using move, node, and longName table where the nodeType is
+   * a conference room and the date <= todays date
+   *
+   * @throws SQLException
+   */
+  public void refreshConfRooms() throws SQLException {
+    Connection connection = DataManager.DbConnection();
+    String query =
+        "Select m.\"nodeID\" as nodeID, ln.\"shortName\" as shortName, n.floor, n.building, max(m.date) as date\n"
+            + "From \"Move\" m, \"Node\" n, \"LocationName\" ln\n"
+            + "Where m.\"nodeID\" = n.\"nodeID\" AND m.\"longName\" = ln.\"longName\" AND m.date <= ? AND ln.\"nodeType\" = ?\n"
+            + "Group by n.building, n.floor, ln.\"shortName\", m.\"nodeID\"";
+    try (connection) {
+      PreparedStatement statement = connection.prepareStatement("TRUNCATE TABLE \"ConfRooms\";");
+      statement.executeUpdate();
+      statement = connection.prepareStatement(query);
+      statement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+      statement.setString(2, "CONF");
+      ResultSet rs = statement.executeQuery();
+      while (rs.next()) {
+        int roomID = rs.getInt("nodeID");
+        String name =
+            rs.getString("shortName")
+                + ", LVL"
+                + rs.getString("floor")
+                + ", "
+                + rs.getString("building");
+        Random r = new Random();
+        int seats = r.nextInt(20, 100);
+        ConfRoom c = new ConfRoom(roomID, name, seats);
+        DataManager.addConfRoom(c);
+      }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  /**
+   * Gets the number of seats from conference room table based on the room
+   *
+   * @param room
+   * @return int
+   * @throws SQLException
+   */
+  public int getSeats(String room) throws SQLException {
+    int seats = -1;
+    Connection connection = DataManager.DbConnection();
+    String query = "Select seats\n" + "From \"ConfRooms\"" + "Where \"locationName\" = ?";
+    try (connection) {
+      PreparedStatement statement = connection.prepareStatement(query);
+      statement.setString(1, room);
+      ResultSet rs = statement.executeQuery();
+
+      rs.next();
+      seats = rs.getInt("seats");
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return seats;
+  }
+
+  /**
+   * Gets the roomID based on the room from conference room table
+   *
+   * @param room
+   * @return int
+   * @throws SQLException
+   */
+  public int getRoomID(String room) throws SQLException {
+    int roomID = -1;
+    Connection connection = DataManager.DbConnection();
+    String query = "Select roomID\n" + "From \"ConfRooms\"" + "Where \"locationName\" = ?";
+    try (connection) {
+      PreparedStatement statement = connection.prepareStatement(query);
+      statement.setString(1, room);
+      ResultSet rs = statement.executeQuery();
+
+      rs.next();
+      roomID = rs.getInt("roomID");
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return roomID;
+  }
+
   //    public void makeDayBookings(Timestamp date) throws SQLException {
   //        Connection connection = DataManager.DbConnection();
   //        try (connection) {
