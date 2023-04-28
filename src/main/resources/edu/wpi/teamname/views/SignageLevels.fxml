@@ -6,7 +6,9 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -52,14 +54,20 @@
             </MFXButton>
          </children>
       </VBox>
-      <VBox fx:id="contentVBox" alignment="CENTER" layoutX="286.0" layoutY="-4.0" prefHeight="804.0" prefWidth="1094.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-4.0">
+      <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="580.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="labelLine" styleClass="primary-text-container" text="Label">
-               <font>
-                  <Font name="Roboto" size="40.0" />
-               </font>
-            </Label>
-         </children></VBox>
+            <VBox fx:id="arrowVbox" alignment="CENTER" prefHeight="800.0" prefWidth="575.0">
+               <children>
+                  <ImageView fx:id="arrowPic" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </VBox>
+            <VBox fx:id="contentVBox" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="804.0" prefWidth="1094.0">
+               <children>
+                  <Label fx:id="signLabel" text="Label" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
    </children>
    <stylesheets>
       <URL value="@../stylesheets/Colors/lightTheme.css" />

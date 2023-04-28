@@ -86,30 +86,7 @@ public class DataManager {
         int kioskID = rs.getInt("kioskID");
         int signID = rs.getInt("signID");
 
-        switch (dir) {
-          case "UP":
-            dir = "^  ";
-            break;
-          case "LEFT":
-            dir = "<--";
-            break;
-          case "DOWN":
-            dir = "v  ";
-            break;
-          case "RIGHT":
-            dir = "-->";
-            break;
-          case "STOP HERE":
-            dir = "Stop Here";
-            break;
-          case "STRAIGHT":
-            dir = "Straight";
-            break;
-          default:
-            System.out.println("Not Valid Direction");
-        }
-
-        items.add(dir + " | " + lName);
+        items.add(dir + "|" + lName);
       }
     } catch (SQLException e) {
       System.out.println(e.getMessage());

@@ -10,8 +10,7 @@ import javafx.scene.input.KeyCode;
 
 public class GameController {
   @FXML MFXButton play;
-  @FXML
-  Label textSpace;
+  @FXML Label textSpace;
   @FXML Label enterSpace;
   @FXML Label score;
 

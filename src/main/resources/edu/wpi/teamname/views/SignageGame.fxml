@@ -1,14 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="edu.wpi.teamname.controllers.SignageController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teamname.controllers.SignageGameController">
+    <children>
+        <VBox layoutX="-2.0" layoutY="-8.0" prefHeight="800.0" prefWidth="486.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="-2.0" AnchorPane.topAnchor="-8.0">
+            <children>
+                <Label prefHeight="89.0" prefWidth="578.0" text="Signage Search" textFill="#235fa6">
+                    <font>
+                        <Font name="Roboto" size="36.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </VBox.margin>
+                </Label>
+                <Label prefHeight="37.0" prefWidth="628.0" stylesheets="@../stylesheets/RowLabel.css" text="Choose Date">
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </VBox.margin>
+                </Label>
+                <DatePicker fx:id="dateChos" prefHeight="60.0" prefWidth="534.0" stylesheets="@../stylesheets/dateBox.css">
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </VBox.margin>
+                </DatePicker>
+                <Label prefHeight="37.0" prefWidth="628.0" stylesheets="@../stylesheets/RowLabel.css" text="Choose Kiosk ID">
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </VBox.margin>
+                </Label>
+                <ComboBox fx:id="KskBox" prefHeight="60.0" prefWidth="558.0" stylesheets="@../stylesheets/combo.css">
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </VBox.margin>
+                </ComboBox>
+                <MFXButton fx:id="submit" alignment="CENTER" prefHeight="25.0" prefWidth="275.0" stylesheets="@../stylesheets/blueButton.css" text="Submit">
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="100.0" right="10.0" top="30.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                </MFXButton>
+            </children>
+        </VBox>
+      <HBox layoutX="587.0" layoutY="12.0" prefHeight="788.0" prefWidth="1013.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="580.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+              <VBox fx:id="arrowVbox" alignment="CENTER" prefHeight="800.0" prefWidth="596.0" />
+            <VBox fx:id="contentVBox" alignment="CENTER" prefHeight="804.0" prefWidth="1094.0" />
+         </children>
+      </HBox>
+    </children>
+    <stylesheets>
+        <URL value="@../stylesheets/Colors/lightTheme.css" />
+        <URL value="@../stylesheets/Colors/darkTheme.css" />
+    </stylesheets>
 </AnchorPane>
