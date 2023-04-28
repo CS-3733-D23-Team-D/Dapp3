@@ -28,6 +28,7 @@ public enum Screen {
   ABOUT("views/AboutPage.fxml"),
   CREDITS("views/CreditsPage.fxml"),
   DATA_MANAGER("views/Data.fxml"),
+  SIGNAGEGAME("views/SignageGame.fxml"),
   GAME("views/Game.fxml");
 
   private final String filename;

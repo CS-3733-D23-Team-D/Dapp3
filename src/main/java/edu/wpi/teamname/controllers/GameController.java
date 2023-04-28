@@ -1,16 +1,17 @@
 package edu.wpi.teamname.controllers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 
-public class Game {
+public class GameController {
   @FXML MFXButton play;
-  @FXML Label textSpace;
+  @FXML
+  Label textSpace;
   @FXML Label enterSpace;
   @FXML Label score;
 
