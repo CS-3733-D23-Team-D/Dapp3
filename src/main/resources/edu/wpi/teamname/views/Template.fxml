@@ -3,7 +3,6 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -16,7 +15,7 @@
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="primary-on-container" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teamname.controllers.ParentController">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <StackPane stylesheets="@../stylesheets/TopBar.css" VBox.vgrow="NEVER">
+         <StackPane VBox.vgrow="NEVER">
             <children>
                <AnchorPane maxHeight="100.0" minHeight="100.0" StackPane.alignment="CENTER_LEFT">
                   <StackPane.margin>
@@ -35,6 +34,78 @@
                                  <Insets left="10.0" />
                               </padding>
                            </Label>
+                           <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                              <children>
+                                 <VBox alignment="CENTER">
+                                    <children>
+                                       <Label fx:id="dateLabel" text="Apr 29, 2023" textFill="WHITE">
+                                          <font>
+                                             <Font name="Roboto Medium" size="18.0" />
+                                          </font>
+                                          <VBox.margin>
+                                             <Insets top="4.0" />
+                                          </VBox.margin>
+                                       </Label>
+                                       <Label fx:id="timeLabel" depthTest="DISABLE" text="16:21" textFill="WHITE">
+                                          <font>
+                                             <Font name="Roboto Thin" size="36.0" />
+                                          </font>
+                                          <VBox.margin>
+                                             <Insets />
+                                          </VBox.margin>
+                                          <padding>
+                                             <Insets top="-8.0" />
+                                          </padding>
+                                       </Label>
+                                    </children>
+                                    <HBox.margin>
+                                       <Insets right="10.0" />
+                                    </HBox.margin>
+                                 </VBox>
+                                 <HBox alignment="CENTER" spacing="5.0">
+                                    <children>
+                                       <VBox alignment="CENTER">
+                                          <children>
+                                             <Label fx:id="tempLabel" text="22° F" textFill="WHITE">
+                                                <font>
+                                                   <Font name="Roboto" size="18.0" />
+                                                </font>
+                                                <VBox.margin>
+                                                   <Insets bottom="-2.5" />
+                                                </VBox.margin>
+                                             </Label>
+                                             <Label fx:id="descLabel" depthTest="DISABLE" text="Rainy" textFill="WHITE">
+                                                <font>
+                                                   <Font name="Roboto Thin" size="18.0" />
+                                                </font>
+                                                <VBox.margin>
+                                                   <Insets top="-2.5" />
+                                                </VBox.margin>
+                                             </Label>
+                                          </children>
+                                          <HBox.margin>
+                                             <Insets right="10.0" />
+                                          </HBox.margin>
+                                       </VBox>
+                                    </children>
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </HBox>
+                                 <HBox alignment="CENTER" spacing="5.0">
+                                    <children>
+                                       <Label fx:id="userLabel" contentDisplay="CENTER" stylesheets="@../stylesheets/SideBar.css" text="User" textFill="WHITE">
+                                          <font>
+                                             <Font name="Roboto Thin" size="18.0" />
+                                          </font>
+                                       </Label>
+                                    </children>
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </HBox>
+                              </children>
+                           </HBox>
 <!--                           <CheckBox fx:id="darkToggle" mnemonicParsing="false" styleClass="label-large" text="Dark Mode" textFill="WHITE" StackPane.alignment="CENTER_RIGHT" />-->
                         </children>
                      </StackPane>
