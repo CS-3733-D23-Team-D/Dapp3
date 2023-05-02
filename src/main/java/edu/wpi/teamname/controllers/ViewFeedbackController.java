@@ -16,10 +16,10 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
 
 /**
-
- The ViewFeedbackController class is responsible for managing the "View Feedback" screen of the application.
- It displays all feedback records in a TableView and allows the user to edit the reporter, description, assignee,
- and status fields of each record. Changes made to the records are synced with the database.
+ * The ViewFeedbackController class is responsible for managing the "View Feedback" screen of the
+ * application. It displays all feedback records in a TableView and allows the user to edit the
+ * reporter, description, assignee, and status fields of each record. Changes made to the records
+ * are synced with the database.
  */
 public class ViewFeedbackController {
   @FXML private TableView<Feedback> feedbackTable;
@@ -30,10 +30,7 @@ public class ViewFeedbackController {
   @FXML private TableColumn<Feedback, Integer> idColumn;
   @FXML private TableColumn<Feedback, Status> statusColumn;
 
-    /**
-
-     Initializes the ViewFeedbackController and sets up the UI elements and functionality.
-     */
+  /** Initializes the ViewFeedbackController and sets up the UI elements and functionality. */
   @FXML
   private void initialize() {
     DataManager dm = new DataManager();

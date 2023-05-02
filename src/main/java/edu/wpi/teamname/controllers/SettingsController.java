@@ -14,10 +14,9 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleGroup;
 
 /**
-
- The SettingsController class is responsible for managing the settings screen of the application.
- It provides functionality for changing the database connection, managing application data,
- and adjusting the application's volume.
+ * The SettingsController class is responsible for managing the settings screen of the application.
+ * It provides functionality for changing the database connection, managing application data, and
+ * adjusting the application's volume.
  */
 public class SettingsController {
 
@@ -32,11 +31,10 @@ public class SettingsController {
   @FXML RadioButton wpiButton;
   @FXML RadioButton awsButton;
   /**
-
-   Initializes the SettingsController and sets up the UI elements and functionality.
-   @throws SQLException if there is an error connecting to the database
+   * Initializes the SettingsController and sets up the UI elements and functionality.
+   *
+   * @throws SQLException if there is an error connecting to the database
    */
-
   @FXML
   public void initialize() throws SQLException {
     ParentController.titleString.set("Settings");
@@ -122,9 +120,9 @@ public class SettingsController {
     viewFeedbackButton.setOnMouseClicked(event -> Navigation.navigate(Screen.VIEW_FEEDBACK));
   }
   /**
-
-   Sets the volume of the application to the specified value.
-   @param volume the new volume value
+   * Sets the volume of the application to the specified value.
+   *
+   * @param volume the new volume value
    */
   private void setApplicationVolume(double volume) {
     // Implement logic to control the volume of the specific application

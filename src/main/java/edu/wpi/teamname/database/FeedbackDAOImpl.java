@@ -11,14 +11,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class FeedbackDAOImpl implements FeedbackDAO {
 
-
-
   /**
-   * This method updates an existing Move object in the "Feedback" table in the database with the new
-   * Feedback object.
+   * This method updates an existing Move object in the "Feedback" table in the database with the
+   * new Feedback object.
    *
    * @param feedback the new Feedback object to be updated in the "Feedback" table
    * @throws SQLException if there is a problem accessing the database
@@ -28,8 +25,8 @@ public class FeedbackDAOImpl implements FeedbackDAO {
     Connection connection = DataManager.DbConnection();
     try (connection) {
       String query =
-              "UPDATE \"Feedback\" SET \"reporter\" = ?, \"dateReported\" = ?, description = ?, assignee=?, status=?"
-                      + " WHERE id = ? AND \"reporter\" = ? AND \"dateReported\" = ? AND description = ? AND \"assignee\" = ? AND\"status\" = ?";
+          "UPDATE \"Feedback\" SET \"reporter\" = ?, \"dateReported\" = ?, description = ?, assignee=?, status=?"
+              + " WHERE id = ? AND \"reporter\" = ? AND \"dateReported\" = ? AND description = ? AND \"assignee\" = ? AND\"status\" = ?";
       PreparedStatement statement = connection.prepareStatement(query);
       statement.setString(1, feedback.getReporter());
       statement.setTimestamp(2, feedback.getDateReported());
@@ -92,12 +89,12 @@ public class FeedbackDAOImpl implements FeedbackDAO {
   public void add(Feedback feedback) throws SQLException {
     Connection connection = DataManager.DbConnection();
     String query =
-            "INSERT INTO \"Feedback\" (id, reporter, \"dateReported\", description, assignee, status) "
-                    + "VALUES (DEFAULT, ?, ?, ?, ?, ?)";
+        "INSERT INTO \"Feedback\" (id, reporter, \"dateReported\", description, assignee, status) "
+            + "VALUES (DEFAULT, ?, ?, ?, ?, ?)";
 
     try (connection) {
       PreparedStatement statement =
-              connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+          connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
       statement.setString(1, feedback.getReporter());
       statement.setTimestamp(2, feedback.getDateReported());
       statement.setString(3, feedback.getDescription());
@@ -131,7 +128,7 @@ public class FeedbackDAOImpl implements FeedbackDAO {
     String del = "DELETE ";
     String sel = "SELECT * ";
     String query =
-            "FROM \"Feedback\" WHERE id = ? AND reporter = ? AND \"dateReported\" = ? AND description = ? AND assignee = ? AND status = ?";
+        "FROM \"Feedback\" WHERE id = ? AND reporter = ? AND \"dateReported\" = ? AND description = ? AND assignee = ? AND status = ?";
 
     try (PreparedStatement statement = connection.prepareStatement(del + query)) {
       statement.setInt(1, feedback.getId()); // add the id parameter
@@ -163,20 +160,20 @@ public class FeedbackDAOImpl implements FeedbackDAO {
 
     try (connection) {
       String createTableQuery =
-              "CREATE TABLE IF NOT EXISTS \"Feedback\" ("
-                      + "\"reporter\" varchar(255),"
-                      + "\"description\" varchar(255),"
-                      + "\"dateReported\" timestamp,"
-                      + "\"assignee\" varchar(255),"
-                      + "\"id\" SERIAL PRIMARY KEY,"
-                      + "\"status\" varchar(255)"
-                      + ");";
+          "CREATE TABLE IF NOT EXISTS \"Feedback\" ("
+              + "\"reporter\" varchar(255),"
+              + "\"description\" varchar(255),"
+              + "\"dateReported\" timestamp,"
+              + "\"assignee\" varchar(255),"
+              + "\"id\" SERIAL PRIMARY KEY,"
+              + "\"status\" varchar(255)"
+              + ");";
       PreparedStatement createTableStatement = connection.prepareStatement(createTableQuery);
       createTableStatement.execute();
 
       String query =
-              "INSERT INTO \"Feedback\" (\"reporter\", \"description\", \"dateReported\", \"assignee\", \"status\") "
-                      + "VALUES (?, ?, ?, ?, ?)";
+          "INSERT INTO \"Feedback\" (\"reporter\", \"description\", \"dateReported\", \"assignee\", \"status\") "
+              + "VALUES (?, ?, ?, ?, ?)";
       PreparedStatement statement = connection.prepareStatement("TRUNCATE TABLE \"Feedback\";");
       statement.executeUpdate();
       statement = connection.prepareStatement(query);
@@ -202,88 +199,86 @@ public class FeedbackDAOImpl implements FeedbackDAO {
     }
   }
 
+  /**
+   * Exports feedback data from the "Feedback" table in the database to a CSV file.
+   *
+   * @param csvFilePath The path to the CSV file to export the data to.
+   * @throws SQLException If there is an error exporting the data from the database.
+   * @throws IOException If there is an error writing the data to the CSV file.
+   */
+  public static void exportFeedbackToCSV(String csvFilePath) throws SQLException, IOException {
+    List<String[]> csvData = new ArrayList<>();
+    Connection connection = DataManager.DbConnection();
 
+    try (connection) {
+      Statement statement = connection.createStatement();
+      ResultSet resultSet = statement.executeQuery("SELECT * FROM \"Feedback\"");
 
-    /**
-     * Exports feedback data from the "Feedback" table in the database to a CSV file.
-     *
-     * @param csvFilePath The path to the CSV file to export the data to.
-     * @throws SQLException If there is an error exporting the data from the database.
-     * @throws IOException  If there is an error writing the data to the CSV file.
-     */
-    public static void exportFeedbackToCSV(String csvFilePath) throws SQLException, IOException {
-      List<String[]> csvData = new ArrayList<>();
-      Connection connection = DataManager.DbConnection();
+      // add column headers
+      ResultSetMetaData metaData = resultSet.getMetaData();
+      int columnCount = metaData.getColumnCount();
+      String[] headers = new String[columnCount];
+      for (int i = 1; i <= columnCount; i++) {
+        headers[i - 1] = metaData.getColumnName(i);
+      }
+      csvData.add(headers);
 
-      try (connection) {
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM \"Feedback\"");
-
-        // add column headers
-        ResultSetMetaData metaData = resultSet.getMetaData();
-        int columnCount = metaData.getColumnCount();
-        String[] headers = new String[columnCount];
+      // add data rows
+      while (resultSet.next()) {
+        String[] row = new String[columnCount];
         for (int i = 1; i <= columnCount; i++) {
-          headers[i - 1] = metaData.getColumnName(i);
+          Object value = resultSet.getObject(i);
+          row[i - 1] = value == null ? "" : value.toString();
         }
-        csvData.add(headers);
-
-        // add data rows
-        while (resultSet.next()) {
-          String[] row = new String[columnCount];
-          for (int i = 1; i <= columnCount; i++) {
-            Object value = resultSet.getObject(i);
-            row[i - 1] = value == null ? "" : value.toString();
-          }
-          csvData.add(row);
-        }
-
-        // write data to CSV file
-        FileWriter fileWriter = new FileWriter(csvFilePath);
-        for (String[] row : csvData) {
-          for (int i = 0; i < row.length; i++) {
-            fileWriter.append("\"");
-            fileWriter.append(row[i].replace("\"", "\"\""));
-            fileWriter.append("\"");
-            if (i < row.length - 1) {
-              fileWriter.append(",");
-            }
-          }
-          fileWriter.append("\n");
-        }
-        fileWriter.flush();
-        fileWriter.close();
-
-        System.out.println("Data exported from PostgreSQL database to CSV file");
-      } catch (SQLException | IOException e) {
-        System.err.println("Error exporting data from PostgreSQL database: " + e.getMessage());
-        throw e;
+        csvData.add(row);
       }
-    }
 
-    /**
-     * Creates a new "Feedback" table in the connected PostgreSQL database if it does not already exist.
-     *
-     * @throws SQLException if there is an error executing the SQL query.
-     */
-    public static void createTable() throws SQLException {
-      Connection connection = DataManager.DbConnection();
-      try (connection) {
-        String query =
-                "CREATE TABLE IF NOT EXISTS \"Feedback\" ("
-                        + "    \"reporter\" varchar(255),"
-                        + "    \"description\" varchar(255),"
-                        + "    \"dateReported\" timestamp,"
-                        + "    \"assignee\" varchar(255),"
-                        + "    \"id\" SERIAL PRIMARY KEY,"
-                        + "    \"status\" varchar(255)"
-                        + ");";
-
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.executeUpdate();
-      } catch (SQLException e) {
-        System.err.println(e.getMessage());
+      // write data to CSV file
+      FileWriter fileWriter = new FileWriter(csvFilePath);
+      for (String[] row : csvData) {
+        for (int i = 0; i < row.length; i++) {
+          fileWriter.append("\"");
+          fileWriter.append(row[i].replace("\"", "\"\""));
+          fileWriter.append("\"");
+          if (i < row.length - 1) {
+            fileWriter.append(",");
+          }
+        }
+        fileWriter.append("\n");
       }
+      fileWriter.flush();
+      fileWriter.close();
+
+      System.out.println("Data exported from PostgreSQL database to CSV file");
+    } catch (SQLException | IOException e) {
+      System.err.println("Error exporting data from PostgreSQL database: " + e.getMessage());
+      throw e;
     }
   }
 
+  /**
+   * Creates a new "Feedback" table in the connected PostgreSQL database if it does not already
+   * exist.
+   *
+   * @throws SQLException if there is an error executing the SQL query.
+   */
+  public static void createTable() throws SQLException {
+    Connection connection = DataManager.DbConnection();
+    try (connection) {
+      String query =
+          "CREATE TABLE IF NOT EXISTS \"Feedback\" ("
+              + "    \"reporter\" varchar(255),"
+              + "    \"description\" varchar(255),"
+              + "    \"dateReported\" timestamp,"
+              + "    \"assignee\" varchar(255),"
+              + "    \"id\" SERIAL PRIMARY KEY,"
+              + "    \"status\" varchar(255)"
+              + ");";
+
+      PreparedStatement statement = connection.prepareStatement(query);
+      statement.executeUpdate();
+    } catch (SQLException e) {
+      System.err.println(e.getMessage());
+    }
+  }
+}
