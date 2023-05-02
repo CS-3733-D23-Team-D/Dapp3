@@ -5,6 +5,7 @@ import edu.wpi.teamname.controllers.JFXitems.DirectionArrow;
 import edu.wpi.teamname.database.DataManager;
 import edu.wpi.teamname.database.PathMessageDAOImpl;
 import edu.wpi.teamname.extras.Sound;
+import edu.wpi.teamname.extras.Weather;
 import edu.wpi.teamname.navigation.AlgoStrategy.AStarAlgo;
 import edu.wpi.teamname.navigation.AlgoStrategy.BFSAlgo;
 import edu.wpi.teamname.navigation.AlgoStrategy.DFSAlgo;
@@ -1358,6 +1359,11 @@ public class MapController {
     //    System.out.println(getAllNodeNames("L1"));
 
     ParentController.titleString.set("Map");
+    ParentController.timeString.set(Weather.getTime());
+    ParentController.dateString.set(Weather.getDate());
+    ParentController.tempString.set(Weather.getTemperature());
+    ParentController.weatherString.set(Weather.getDescription());
+    ParentController.userString.set(GlobalVariables.getCurrentUser().getUsername());
 
     endSel = EndPointSelect;
     LocOne = LocationOne;

@@ -65,6 +65,13 @@ public class ParentController {
   @FXML MFXButton viewAlertsButton; // = new MFXButton();
   @FXML Label titleLabel;
 
+  // Top bar label
+  @FXML Label timeLabel;
+  @FXML Label dateLabel;
+  @FXML Label tempLabel;
+  @FXML Label descLabel;
+  @FXML Label userLabel;
+
   @FXML VBox SideBar;
   @FXML HBox MainScreen;
 
@@ -97,6 +104,11 @@ public class ParentController {
               Screen.SMILE));
 
   @Setter public static StringProperty titleString = new SimpleStringProperty();
+  @Setter public static StringProperty timeString = new SimpleStringProperty();
+  @Setter public static StringProperty dateString = new SimpleStringProperty();
+  @Setter public static StringProperty tempString = new SimpleStringProperty();
+  @Setter public static StringProperty userString = new SimpleStringProperty();
+  @Setter public static StringProperty weatherString = new SimpleStringProperty();
 
   /** * Disables all the buttons that can not be accessed without logging in */
   public void disableButtonsWhenNotLoggedIn() {
@@ -422,6 +434,12 @@ public class ParentController {
   public void initialize() throws IOException {
 
     titleLabel.setText(titleString.getValue());
+    timeLabel.setText(timeString.getValue());
+    dateLabel.setText(dateString.getValue());
+    descLabel.setText(weatherString.getValue());
+    tempLabel.setText(tempString.getValue());
+    userLabel.setText(userString.getValue());
+
     System.out.println("Parent!");
 
     if (HomeController.getLoggedIn().getValue()) {

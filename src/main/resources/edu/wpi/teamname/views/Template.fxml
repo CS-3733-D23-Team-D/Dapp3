@@ -96,7 +96,7 @@
                                     <children>
                                        <Label fx:id="userLabel" contentDisplay="CENTER" stylesheets="@../stylesheets/SideBar.css" text="User" textFill="WHITE">
                                           <font>
-                                             <Font name="Roboto Thin" size="18.0" />
+                                             <Font name="Roboto" size="18.0" />
                                           </font>
                                        </Label>
                                     </children>
