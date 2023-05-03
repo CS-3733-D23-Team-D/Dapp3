@@ -46,7 +46,6 @@ public class DataController implements Initializable {
     "Conference Reservations",
     "Edge",
     "Employee",
-    "Employee Type",
     "Flowers",
     "Furniture",
     "Items Ordered",
@@ -155,19 +154,16 @@ public class DataController implements Initializable {
               DataManager.uploadNode(csvFile.getPath());
               break;
             case "Conference Room":
-              // DataManager.upload(csvFile.getPath());
+              DataManager.uploadConfRoom(csvFile.getPath());
               break;
             case "Conference Reservations":
-              // DataManager.upload(csvFile.getPath());
+              DataManager.uploadConfReservation(csvFile.getPath());
               break;
             case "Alert":
               DataManager.uploadAlert(csvFile.getPath());
               break;
             case "Employee":
               DataManager.uploadEmployee(csvFile.getPath());
-              break;
-            case "Employee Type":
-              // DataManager.uploadEmployeeType(csvFile.getPath());
               break;
             case "Flowers":
               DataManager.uploadFlower(csvFile.getPath());
@@ -194,7 +190,7 @@ public class DataController implements Initializable {
               DataManager.uploadOfficeSupply(csvFile.getPath());
               break;
             case "Path Messages":
-              // DataManager.uploadPathMessages(csvFile.getPath());
+              DataManager.uploadPathMessage(csvFile.getPath());
               break;
             case "Service Requests":
               DataManager.uploadServiceRequest(csvFile.getPath());
@@ -244,11 +240,11 @@ public class DataController implements Initializable {
               break;
             case "Conference Room":
               fileChooser.setInitialFileName("conferenceRoom.csv");
-              // DataManager.exportConferenceRoomToCSV(csvFile.getPath());
+              DataManager.exportConfRoomToCSV(csvFile.getPath());
               break;
             case "Conference Reservations":
               fileChooser.setInitialFileName("conferenceReservations.csv");
-              // DataManager.exportConferenceRoomToCSV(csvFile.getPath());
+              DataManager.exportConfReservationToCSV(csvFile.getPath());
               break;
             case "Alert":
               fileChooser.setInitialFileName("alert.csv");
@@ -257,10 +253,6 @@ public class DataController implements Initializable {
             case "Employee":
               fileChooser.setInitialFileName("employee.csv");
               DataManager.exportEmployeeToCSV(csvFile.getPath());
-              break;
-            case "Employee Type":
-              fileChooser.setInitialFileName("employeeType.csv");
-              // DataManager.exportEmployeeTypeToCSV(csvFile.getPath());
               break;
             case "Flowers":
               fileChooser.setInitialFileName("flowers.csv");
@@ -292,7 +284,7 @@ public class DataController implements Initializable {
               break;
             case "Path Messages":
               fileChooser.setInitialFileName("pathMessages.csv");
-              // DataManager.exportPathMessagesToCSV(csvFile.getPath());
+              DataManager.exportPMToCSV(csvFile.getPath());
               break;
             case "Pharmaceutical":
               fileChooser.setInitialFileName("pharmaceutical.csv");

@@ -61,7 +61,7 @@ public class RoomSelector extends BorderPane {
     // this.name.setStyle("-fx-background-color: #D5E3FF; -fx-text-fill: #001B3B");
     //    this.setStyle("-fx-background-color: #D5E3FF; -fx-border-color: #6F797A");
     this.name.setMinHeight(75);
-    this.name.setMinWidth(150);
+    this.name.setMinWidth(260);
     this.getStyleClass().add("primary-container");
 
     for (int i = 0; i < slots; i++) {

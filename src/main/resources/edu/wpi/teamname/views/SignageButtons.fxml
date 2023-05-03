@@ -3,7 +3,6 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
@@ -11,7 +10,7 @@
 
 <VBox alignment="CENTER" styleClass="primary-on-container" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <MFXButton fx:id="viewSignageButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="primary-on-container" text="View Signage" id="View Signage" textFill="#1a1c1e">
+      <MFXButton id="View Signage" fx:id="viewSignageButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="primary-on-container" text="View Signage" textFill="#1a1c1e">
          <font>
             <Font name="Roboto" size="22.0" />
          </font>
@@ -27,8 +26,7 @@
             <URL value="@../stylesheets/Colors/sideBarColor.css" />
          </stylesheets>
       </MFXButton>
-      <Separator prefWidth="200.0" />
-      <MFXButton fx:id="editSignageButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="primary-on-container" text="Edit Signage" id="Edit Signage" textFill="#1a1c1e">
+      <MFXButton id="Edit Signage" fx:id="editSignageButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="primary-on-container" text="Edit Signage" textFill="#1a1c1e">
          <font>
             <Font name="Roboto" size="22.0" />
          </font>

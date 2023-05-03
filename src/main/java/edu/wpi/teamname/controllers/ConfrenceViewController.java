@@ -17,6 +17,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lombok.Getter;
+import lombok.Setter;
 import org.controlsfx.control.SearchableComboBox;
 
 /** Controller for the UI to view the conference room reservations */
@@ -47,7 +49,7 @@ public class ConfrenceViewController {
   @FXML AnchorPane root;
 
   private double totalPrice = 0.0;
-
+  @Getter @Setter static int roomNum;
   @FXML DatePicker dateBox;
   @FXML SearchableComboBox<String> requestStaffCombo;
   //  ObservableList<String> serviceType =
@@ -76,6 +78,13 @@ public class ConfrenceViewController {
                       (reservation) ->
                           (reservation.getDateBook().getDate() == date.getDate())
                               && (reservation.getDateBook().getMonth() == date.getMonth()))
+                  .toList());
+    }
+    if (roomNum != 0) {
+      reservationList =
+          FXCollections.observableList(
+              reservationList.stream()
+                  .filter((reservation) -> (roomNum == reservation.getRoomID()))
                   .toList());
     }
     if (!(username == (null)) && !(username.toString().equals(""))) {
@@ -227,6 +236,7 @@ public class ConfrenceViewController {
    */
   @FXML
   public void initialize() throws SQLException {
+    roomNum = 0;
     ThemeSwitch.switchTheme(root);
     ParentController.titleString.set("Conference Room Reservations View");
     setLanguage(GlobalVariables.getB().getValue());
@@ -360,6 +370,7 @@ public class ConfrenceViewController {
 
     if (GlobalVariables.isRequestFromMap()) {
       dateBox.setValue(GlobalVariables.getDateFromMap().toLocalDateTime().toLocalDate());
+      setRoomNum(GlobalVariables.getRoomIDFromMap());
       GlobalVariables.setRequestFromMap(false);
       try {
         // update the table when the status combo box is changed

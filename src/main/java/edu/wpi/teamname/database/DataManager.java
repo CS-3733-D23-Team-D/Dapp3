@@ -2124,4 +2124,17 @@ public class DataManager {
     FeedbackDAOImpl fb = new FeedbackDAOImpl();
     return fb.getAll();
   }
+
+  /**
+   * This method exports all the PathMessage objects from the "PathMessages" table in the database
+   * to a CSV file at the specified file path.
+   *
+   * @param csvFilePath the file path of the CSV file to export the PathMessage objects to
+   * @throws SQLException if there is a problem accessing the database
+   * @throws IOException if there is a problem writing the CSV file
+   */
+  public static void exportPMToCSV(String csvFilePath) throws SQLException, IOException {
+    PathMessageDAOImpl pm = new PathMessageDAOImpl();
+    pm.exportPMToCSV(csvFilePath);
+  }
 }

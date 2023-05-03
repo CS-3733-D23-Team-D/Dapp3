@@ -20,7 +20,7 @@ public class Sound {
               .toURI()
               .toString());
   @Getter private static MediaPlayer buttonPlayer = new MediaPlayer(soundSFX);
-  @Getter private static double volume = 0.5;
+  @Getter private static double volume = 0.0;
 
   /**
    * * Starts playing the background music It will play whatever song is currently set and stop a

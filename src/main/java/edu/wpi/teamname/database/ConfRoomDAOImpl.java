@@ -89,10 +89,10 @@ public class ConfRoomDAOImpl implements ConfRomDAO {
   public void refreshConfRooms() throws SQLException {
     Connection connection = DataManager.DbConnection();
     String query =
-        "Select m.\"nodeID\" as nodeID, ln.\"shortName\" as shortName, n.floor, n.building, max(m.date) as date\n"
+        "Select m.\"nodeID\" as nodeID, ln.\"longName\" as longName, n.floor, n.building, max(m.date) as date\n"
             + "From \"Move\" m, \"Node\" n, \"LocationName\" ln\n"
             + "Where m.\"nodeID\" = n.\"nodeID\" AND m.\"longName\" = ln.\"longName\" AND m.date <= ? AND ln.\"nodeType\" = ?\n"
-            + "Group by n.building, n.floor, ln.\"shortName\", m.\"nodeID\"";
+            + "Group by n.building, n.floor, ln.\"longName\", m.\"nodeID\"";
     try (connection) {
       PreparedStatement statement = connection.prepareStatement("TRUNCATE TABLE \"ConfRooms\";");
       statement.executeUpdate();
@@ -103,7 +103,7 @@ public class ConfRoomDAOImpl implements ConfRomDAO {
       while (rs.next()) {
         int roomID = rs.getInt("nodeID");
         String name =
-            rs.getString("shortName")
+            rs.getString("longName")
                 + ", LVL"
                 + rs.getString("floor")
                 + ", "

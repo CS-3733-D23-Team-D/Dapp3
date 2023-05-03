@@ -102,7 +102,8 @@ public class Map {
     this.movingNodeId = -1;
 
     this.showNodes = !this.isMapPage;
-    this.showLegend = !this.isMapPage;
+    //    this.showLegend = !this.isMapPage;
+    this.showLegend = true;
     this.currTime = new Timestamp(System.currentTimeMillis());
 
     this.rm = new RoomManager();

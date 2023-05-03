@@ -3,7 +3,6 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
@@ -11,7 +10,7 @@
 
 <VBox alignment="CENTER" styleClass="primary-on-container" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <MFXButton fx:id="mapButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="primary-on-container" stylesheets="@../stylesheets/Colors/sideBarColor.css" text="View Map" id="View Map" textFill="#1a1c1e">
+      <MFXButton id="View Map" fx:id="mapButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="primary-on-container" stylesheets="@../stylesheets/Colors/sideBarColor.css" text="View Map" textFill="#1a1c1e">
          <font>
             <Font name="Roboto" size="22.0" />
          </font>
@@ -23,8 +22,7 @@
             </ImageView>
          </graphic>
       </MFXButton>
-      <Separator />
-      <MFXButton fx:id="editMoveButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="263.0" maxWidth="1.7976931348623157E308" styleClass="primary-on-container" stylesheets="@../stylesheets/Colors/sideBarColor.css" text="View Moves" id="View Moves" textFill="#1a1c1e" textOverrun="CLIP" wrapText="true">
+      <MFXButton id="View Moves" fx:id="editMoveButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="263.0" maxWidth="1.7976931348623157E308" styleClass="primary-on-container" stylesheets="@../stylesheets/Colors/sideBarColor.css" text="View Moves" textFill="#1a1c1e" textOverrun="CLIP" wrapText="true">
          <font>
             <Font name="Roboto" size="22.0" />
          </font>
@@ -36,8 +34,7 @@
             </ImageView>
          </graphic>
       </MFXButton>
-      <Separator />
-      <MFXButton fx:id="editMapButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="primary-on-container" stylesheets="@../stylesheets/Colors/sideBarColor.css" text="Edit Map" id="Edit Map" textFill="#1a1c1e" textOverrun="CLIP" wrapText="true">
+      <MFXButton id="Edit Map" fx:id="editMapButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" styleClass="primary-on-container" stylesheets="@../stylesheets/Colors/sideBarColor.css" text="Edit Map" textFill="#1a1c1e" textOverrun="CLIP" wrapText="true">
          <font>
             <Font name="Roboto" size="22.0" />
          </font>

@@ -160,7 +160,14 @@ public class NodeCircle {
             if (tStr.equals(currStr)) {
               //            s.setFill(Color.BLUE);
 
-              s.setOnMouseClicked(event -> Navigation.navigate(Screen.SERVICE_REQUEST_VIEW));
+              s.setOnMouseClicked(
+                  event -> {
+                    GlobalVariables.setRequestFromMap(true);
+                    GlobalVariables.setDateFromMap(t);
+                    GlobalVariables.setRoomFromMap(request.getRoomNumber());
+
+                    Navigation.navigate(Screen.SERVICE_REQUEST_VIEW);
+                  });
 
               switch (request.getRequestType()) {
                 case MEAL:
@@ -273,7 +280,7 @@ public class NodeCircle {
         String sName = l.get(0).getShortName();
         for (ConfRoom room : confs) {
           String roomname = room.getLocationName().split(",")[0];
-          if (roomname.equals(sName)) {
+          if (roomname.equals(locName)) {
 
             //            ArrayList<ConfReservation> allRes = GlobalVariables.getConfReservations();
 
@@ -283,7 +290,7 @@ public class NodeCircle {
 
             Timestamp curr = map.getCurrTime();
             String currStr = curr.toString().split("\\s+")[0];
-
+            boolean status = true;
             for (ConfReservation res : reses) {
               Timestamp resT = res.getDateBook();
               String resTStr = resT.toString().split("\\s+")[0];
@@ -302,46 +309,51 @@ public class NodeCircle {
                 //                mushedDateTime.set
                 //                int nodeID;
 
-                Boolean status = map.getRm().checkAvailable(nodeID, mushedDateTime);
+                status = map.getRm().checkAvailable(nodeID, mushedDateTime);
 
                 //                RoomStatus status = RoomStatus.AVAILABLE;
-
-                if (status) {
-                  s2.setFill(Color.GREEN);
-                } else {
-                  s2.setFill(Color.RED);
-                }
-
-                //                switch (status) {
-                //                  case ERROR:
-                //                    s2.setFill(Color.RED);
-                //                    break;
-                //                  case BOOKED:
-                //                    s2.setFill(Color.ORANGE);
-                //                    break;
-                //                  case SELECTED:
-                //                    s2.setFill(Color.YELLOW);
-                //                    break;
-                //                  case AVAILABLE:
-                //                    s2.setFill(Color.GREEN);
-                //                  default:
-                //                    s2.setFill(Color.WHITE);
-                //                    break;
-                //                }
-                //
-                s2.setOnMouseClicked(event -> Navigation.navigate(Screen.CONF_VIEW));
-
-                System.out.println("Child");
-
-                iconP.getChildren().add(s2O);
-                iconP.getChildren().add(s2);
-                iconP.getChildren().add(confIcon);
-
-                added = true;
 
                 break;
               }
             }
+            if (status) {
+              s2.setFill(Color.GREEN);
+            } else {
+              s2.setFill(Color.RED);
+            }
+
+            //                switch (status) {
+            //                  case ERROR:
+            //                    s2.setFill(Color.RED);
+            //                    break;
+            //                  case BOOKED:
+            //                    s2.setFill(Color.ORANGE);
+            //                    break;
+            //                  case SELECTED:
+            //                    s2.setFill(Color.YELLOW);
+            //                    break;
+            //                  case AVAILABLE:
+            //                    s2.setFill(Color.GREEN);
+            //                  default:
+            //                    s2.setFill(Color.WHITE);
+            //                    break;
+            //                }
+            //
+            s2.setOnMouseClicked(
+                event -> {
+                  GlobalVariables.setRequestFromMap(true);
+                  GlobalVariables.setRoomIDFromMap(room.getRoomID());
+                  GlobalVariables.setDateFromMap(map.getCurrTime());
+                  Navigation.navigate(Screen.CONF_VIEW);
+                });
+
+            System.out.println("Child");
+
+            iconP.getChildren().add(s2O);
+            iconP.getChildren().add(s2);
+            iconP.getChildren().add(confIcon);
+
+            added = true;
           }
         }
       }

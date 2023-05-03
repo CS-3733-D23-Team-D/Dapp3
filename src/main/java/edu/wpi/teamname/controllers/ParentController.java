@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -25,6 +26,7 @@ import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -85,6 +87,8 @@ public class ParentController {
   Pane mp2;
   Pane sp2;
   Pane rp2;
+
+  int buttonSize = 45;
 
   ArrayList<Screen> secureScreens =
       new ArrayList<>(
@@ -186,6 +190,9 @@ public class ParentController {
   public void hideMapPop() {
     if (!isOnMapPop) {
       mp2.setVisible(false);
+      removeAllChildren(mp2);
+      Pane mp = (Pane) mapButtonSelector.getParent();
+      VBox.setMargin(mp, new Insets(0, 0, 0, 0));
       //      mapPop.hide();
     }
   }
@@ -193,6 +200,9 @@ public class ParentController {
   public void hideServicePop() {
     if (!isOnServicePop) {
       rp2.setVisible(false);
+      removeAllChildren(rp2);
+      Pane rp = (Pane) makeRequestsButtonSelector.getParent();
+      VBox.setMargin(rp, new Insets(0, 0, 0, 0));
       //      servicePop.hide();
     }
   }
@@ -200,6 +210,9 @@ public class ParentController {
   public void hideSignagePop() {
     if (!isOnSignagePop) {
       sp2.setVisible(false);
+      removeAllChildren(sp2);
+      Pane sp = (Pane) viewSignageButtonSelector.getParent();
+      VBox.setMargin(sp, new Insets(0, 0, 0, 0));
       //      signagePop.hide();
     }
   }
@@ -560,28 +573,7 @@ public class ParentController {
     setLanguage(GlobalVariables.getB().getValue());
 
     titleLabel.setText(titleString.getValue());
-    System.out.println("Parent!");
-
-    if (HomeController.getLoggedIn().getValue()) {
-      // disableButtonsWhenNotLoggedIn();
-      loginButton.setVisible(false);
-      logoutButton.setVisible(true);
-    } else {
-      loginButton.setVisible(true);
-      logoutButton.setVisible(false);
-      /*/(2)
-      viewSignageButton.setVisible(true);
-      makeRequestsButton.setVisible(false);
-      showRequestsButton.setVisible(false);
-      editMoveButton.setVisible(false);
-      editMapButton.setVisible(false);
-      showEmployeesButton.setVisible(false);
-      viewAlertsButton.setVisible(false);
-      editSignageButton.setVisible(false);
-      requestRoomButton.setVisible(false);
-      //*/
-
-    }
+    System.out.println("Parent!: " + HomeController.getLoggedIn().getValue());
 
     /*/(2)
     if (GlobalVariables.userIsClearanceLevel(ClearanceLevel.STAFF)) {
@@ -669,6 +661,28 @@ public class ParentController {
       }
     }
 
+    if (HomeController.getLoggedIn().getValue()) {
+      // disableButtonsWhenNotLoggedIn();
+      //      System.out.println("VIS");
+      loginButton.setVisible(false);
+      logoutButton.setVisible(true);
+    } else {
+      loginButton.setVisible(true);
+      logoutButton.setVisible(false);
+      /*/(2)
+      viewSignageButton.setVisible(true);
+      makeRequestsButton.setVisible(false);
+      showRequestsButton.setVisible(false);
+      editMoveButton.setVisible(false);
+      editMapButton.setVisible(false);
+      showEmployeesButton.setVisible(false);
+      viewAlertsButton.setVisible(false);
+      editSignageButton.setVisible(false);
+      requestRoomButton.setVisible(false);
+      //*/
+
+    }
+
     //    mapButton.setBorder(
     //        new Border(
     //            new BorderStroke(
@@ -684,15 +698,19 @@ public class ParentController {
                   ObservableValue<? extends Boolean> observable,
                   Boolean oldValue,
                   Boolean newValue) {
-                //                System.out.println("Hover: " + oldValue + " -> " + newValue);
-                //                System.out.println("MP:  " + isOnMapPop);
+
+                isOnMapPop = newValue;
                 if (newValue) {
-                  mp2.setVisible(newValue);
-                  //                  mapPop.show(mapButton);
-                  //                  mapPop.setAnchorX(mapPop.getAnchorX() - 20);
+                  Pane mp = (Pane) mapButtonSelector.getParent();
+                  mp2 = (Pane) mp.getChildren().get(1);
+                  mp2.getChildren().add(loadButtons("views/MapButtons.fxml"));
+                  resize(mp, mp2);
+                  //                  Platform.runLater(() -> resize(mp, mp2));
                 } else {
+                  removeAllChildren(mp2);
                   Platform.runLater(() -> hideMapPop());
                 }
+                mp2.setVisible(isOnMapPop);
               }
             });
 
@@ -705,12 +723,19 @@ public class ParentController {
                   ObservableValue<? extends Boolean> observable,
                   Boolean oldValue,
                   Boolean newValue) {
+
+                isOnSignagePop = newValue;
                 if (newValue) {
-                  sp2.setVisible(newValue);
-                  //                  signagePop.show(viewSignageButton);
+                  Pane sp = (Pane) viewSignageButtonSelector.getParent();
+                  sp2 = (Pane) sp.getChildren().get(1);
+                  sp2.getChildren().add(loadButtons("views/SignageButtons.fxml"));
+                  resize(sp, sp2);
+                  //                  Platform.runLater(() -> resize(sp, sp2));
                 } else {
+                  removeAllChildren(sp2);
                   Platform.runLater(() -> hideSignagePop());
                 }
+                sp2.setVisible(isOnSignagePop);
               }
             });
 
@@ -723,18 +748,25 @@ public class ParentController {
                   ObservableValue<? extends Boolean> observable,
                   Boolean oldValue,
                   Boolean newValue) {
+
+                isOnServicePop = newValue;
+                Pane rp = (Pane) makeRequestsButtonSelector.getParent();
                 if (newValue) {
-                  rp2.setVisible(newValue);
-                  //                  servicePop.show(makeRequestsButton);
+                  rp2 = (Pane) rp.getChildren().get(1);
+                  rp2.getChildren().add(loadButtons("views/ServiceButtons.fxml"));
+                  resize(rp, rp2);
+                  //                  Platform.runLater(() -> resize(rp, rp2));
                 } else {
+                  removeAllChildren(rp2);
                   Platform.runLater(() -> hideServicePop());
                 }
+                rp2.setVisible(isOnServicePop);
               }
             });
 
     Pane mp = (Pane) mapButtonSelector.getParent();
     mp2 = (Pane) mp.getChildren().get(1);
-    mp2.getChildren().add(loadButtons("views/MapButtons.fxml"));
+    //    mp2.getChildren().add(loadButtons("views/MapButtons.fxml"));
     mp2.setVisible(false);
     mp2.hoverProperty()
         .addListener(
@@ -745,14 +777,24 @@ public class ParentController {
                   Boolean oldValue,
                   Boolean newValue) {
                 //                System.out.println("MPC");
+
                 isOnMapPop = newValue;
+                if (newValue) {
+                  mp2 = (Pane) mp.getChildren().get(1);
+                  mp2.getChildren().add(loadButtons("views/MapButtons.fxml"));
+                  resize(mp, mp2);
+                  //                  Platform.runLater(() -> resize(mp, mp2));
+                } else {
+                  removeAllChildren(mp2);
+                  VBox.setMargin(mp, new Insets(0, 0, 0, 0));
+                }
                 mp2.setVisible(isOnMapPop);
               }
             });
 
     Pane sp = (Pane) viewSignageButtonSelector.getParent();
     sp2 = (Pane) sp.getChildren().get(1);
-    sp2.getChildren().add(loadButtons("views/SignageButtons.fxml"));
+    //    sp2.getChildren().add(loadButtons("views/SignageButtons.fxml"));
     sp2.setVisible(false);
     sp2.hoverProperty()
         .addListener(
@@ -762,14 +804,25 @@ public class ParentController {
                   ObservableValue<? extends Boolean> observable,
                   Boolean oldValue,
                   Boolean newValue) {
+
                 isOnSignagePop = newValue;
+                if (newValue) {
+                  sp2 = (Pane) sp.getChildren().get(1);
+                  sp2.getChildren().add(loadButtons("views/SignageButtons.fxml"));
+                  resize(sp, sp2);
+                  //                  Platform.runLater(() -> resize(sp, sp2));
+                } else {
+                  removeAllChildren(sp2);
+                  //                  VBox.setMargin(sp, new Insets(0,0,0,0));
+                  VBox.setMargin(sp, new Insets(0, 0, 0, 0));
+                }
                 sp2.setVisible(isOnSignagePop);
               }
             });
 
     Pane rp = (Pane) makeRequestsButtonSelector.getParent();
     rp2 = (Pane) rp.getChildren().get(1);
-    rp2.getChildren().add(loadButtons("views/ServiceButtons.fxml"));
+    //    rp2.getChildren().add(loadButtons("views/ServiceButtons.fxml"));
     rp2.setVisible(false);
     rp2.hoverProperty()
         .addListener(
@@ -779,10 +832,28 @@ public class ParentController {
                   ObservableValue<? extends Boolean> observable,
                   Boolean oldValue,
                   Boolean newValue) {
+                //                isOnServicePop = newValue;
+                //                rp2.setVisible(isOnServicePop);
+
                 isOnServicePop = newValue;
+                if (newValue) {
+                  rp2 = (Pane) rp.getChildren().get(1);
+                  rp2.getChildren().add(loadButtons("views/ServiceButtons.fxml"));
+                  resize(rp, rp2);
+                  //                  Platform.runLater(() -> resize(rp, rp2));
+                } else {
+                  removeAllChildren(rp2);
+                  VBox.setMargin(rp, new Insets(0, 0, 0, 0));
+                }
                 rp2.setVisible(isOnServicePop);
               }
             });
+
+    //    makeRequestsButtonSelector
+    //    viewSignageButtonSelector
+    //    mapButtonSelector.setMaxHeight(buttonSize);
+    //    viewSignageButtonSelector.setMaxHeight(buttonSize);
+    //    makeRequestsButtonSelector.setMaxHeight(buttonSize);
 
     SideBar.viewOrderProperty().set(0);
     MainScreen.viewOrderProperty().set(1);
@@ -799,5 +870,20 @@ public class ParentController {
     //    mapButton.setOnMouseExited(hideMap);
     //    viewSignageButton.setOnMouseExited(hideSignage);
     //    makeRequestsButton.setOnMouseExited(hideService);
+  }
+
+  private void resize(Pane one, Pane two) {
+    ReadOnlyDoubleProperty height = two.heightProperty();
+    double realHeight = height.get();
+    realHeight = ((Pane) (two.getChildren().get(0))).getChildren().size() * buttonSize;
+    System.out.println("RH: " + realHeight);
+    VBox.setMargin(one, new Insets(0, 0, -realHeight + buttonSize, 0));
+    //    VBox.setMargin(one, new Insets(0, 0, -180, 0));
+  }
+
+  private void removeAllChildren(Pane pane) {
+    for (int i = pane.getChildren().size() - 1; i >= 0; i--) {
+      pane.getChildren().remove(i);
+    }
   }
 }
