@@ -34,7 +34,7 @@
                               <String fx:value="primary-text-container" />
                            </styleClass>
                         </Label>
-                        <TextField fx:id="loginText" maxHeight="57.0" maxWidth="400.0" promptText="Username" styleClass="surface" stylesheets="@../stylesheets/login.css">
+                        <TextField fx:id="loginText" maxHeight="57.0" maxWidth="400.0" promptText="Username" styleClass="surface">
                            <font>
                               <Font name="Roboto" size="28.0" />
                            </font>
@@ -43,7 +43,7 @@
                               <Insets bottom="6.0" />
                            </VBox.margin>
                         </TextField>
-                        <PasswordField fx:id="passwordText" maxHeight="57.0" maxWidth="400.0" promptText="Password" styleClass="surface" stylesheets="@../stylesheets/login.css">
+                        <PasswordField fx:id="passwordText" maxHeight="57.0" maxWidth="400.0" promptText="Password" styleClass="surface">
                            <font>
                               <Font name="Roboto" size="28.0" />
                            </font>
