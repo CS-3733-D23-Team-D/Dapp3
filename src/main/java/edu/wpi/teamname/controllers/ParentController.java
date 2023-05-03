@@ -327,6 +327,9 @@ public class ParentController {
       //      System.out.println(remInd.get(i));
       v.getChildren().remove(remInd.get(i).intValue());
     }
+
+
+
     //    System.out.println("ES: " + v.getChildren().size());
 
     return v;
