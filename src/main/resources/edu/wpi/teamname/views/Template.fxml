@@ -37,9 +37,7 @@
                            </Label>
                            <HBox alignment="CENTER_RIGHT" prefHeight="8.0" prefWidth="312.0" spacing="15.0" StackPane.alignment="CENTER_RIGHT">
                               <children>
-g
                                  <ComboBox fx:id="languageChooser" promptText="Choose Language" />
-
                               </children>
                            </HBox>
 <!--                           <CheckBox fx:id="darkToggle" mnemonicParsing="false" styleClass="label-large" text="Dark Mode" textFill="WHITE" StackPane.alignment="CENTER_RIGHT" />-->
