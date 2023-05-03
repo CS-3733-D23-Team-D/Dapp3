@@ -414,7 +414,7 @@ public class HomeController {
       viewSignageButton.setGraphic(
           getSizedGraphic("edu/wpi/teamname/images/MenuIcons/light/directions.png"));
       editSignageButton.setGraphic(
-          getSizedGraphic("edu/wpi/teamname/images/MenuIcons/light/route.png"));
+          getSizedGraphic("edu/wpi/teamname/images/MenuIcons/light/fork_left.png"));
     }
 
     languageChooser.setItems(

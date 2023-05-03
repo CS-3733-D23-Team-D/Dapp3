@@ -10,18 +10,18 @@ import java.io.IOException;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import org.controlsfx.control.PopOver;
 
 public class AboutPageController {
 
-  @FXML Label titleLabel;
-  @FXML Label thanksLabel;
-  @FXML Label specialThanksLabel;
+  @FXML Text titleLabel;
+  @FXML Text thanksLabel;
+  @FXML Text specialThanksLabel;
   @FXML MFXButton ianButton;
   @FXML MFXButton jasonButton;
   @FXML MFXButton alessandroButton;
