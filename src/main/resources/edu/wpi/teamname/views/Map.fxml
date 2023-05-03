@@ -543,7 +543,7 @@
             </AnchorPane>
          </children>
       </HBox>
-      <VBox fx:id="AddMessageVBox" alignment="CENTER" layoutX="308.0" layoutY="14.0" prefHeight="169.0" prefWidth="268.0" spacing="10.0" style="-fx-background-radius: 16;" styleClass="primary-container" AnchorPane.leftAnchor="308.0" AnchorPane.topAnchor="14.0">
+      <VBox fx:id="AddMessageVBox" alignment="CENTER" layoutX="308.0" layoutY="14.0" prefHeight="169.0" prefWidth="268.0" spacing="10.0" style="-fx-background-radius: 16;" styleClass="primary-container" stylesheets="@../stylesheets/Colors/darkTheme.css" AnchorPane.leftAnchor="308.0" AnchorPane.topAnchor="14.0">
          <children>
             <Label fx:id="AdminIDLabel" styleClass="primary-text-container" text="Admin ID" textFill="WHITE">
                <font>
@@ -573,11 +573,11 @@
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding></VBox>
-      <TableView fx:id="MessageTableView" layoutX="297.0" layoutY="625.0" prefHeight="184.0" prefWidth="550.0" stylesheets="@../stylesheets/TableViewStuff.css" visible="false" AnchorPane.leftAnchor="308.0" AnchorPane.topAnchor="14.0">
+      <TableView fx:id="MessageTableView" layoutX="297.0" layoutY="625.0" prefHeight="200.0" prefWidth="446.0" stylesheets="@../stylesheets/TableViewStuff.css" AnchorPane.leftAnchor="308.0" AnchorPane.topAnchor="14.0">
          <columns>
-            <TableColumn fx:id="DateColumn" maxWidth="1.7976931348623157E308" prefWidth="120.0" text="Date" />
-            <TableColumn fx:id="AdminColumn" prefWidth="57.60003662109375" text="AdminID" />
-            <TableColumn fx:id="MessageColumn" prefWidth="380.0" text="Message" />
+            <TableColumn fx:id="DateColumn" maxWidth="1.7976931348623157E308" prefWidth="70.39996337890625" text="Date" />
+            <TableColumn fx:id="AdminColumn" prefWidth="64.800048828125" text="AdminID" />
+            <TableColumn fx:id="MessageColumn" prefWidth="308.0" text="Message" />
          </columns></TableView>
     </children>
    <stylesheets>
