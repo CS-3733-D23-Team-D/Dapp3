@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.*?>
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
-<?import net.kurobako.gesturefx.*?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import net.kurobako.gesturefx.GesturePane?>
 
-<AnchorPane id="AP" fx:id="OuterMapAnchor" prefHeight="668.0" prefWidth="951.0" styleClass="surface" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teamname.controllers.MapController">
+<AnchorPane id="AP" fx:id="OuterMapAnchor" prefHeight="668.0" prefWidth="951.0" styleClass="surface" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.teamname.controllers.MapController">
     <children>
       <HBox styleClass="surface" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -486,11 +499,6 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="138.0">
                            <children>
                               <Ellipse fill="#edb230" radiusX="6.0" radiusY="6.0" stroke="#012d5a" strokeType="INSIDE" />
-                              <Ellipse fill="#012d5a" nodeOrientation="LEFT_TO_RIGHT" radiusX="2.0" radiusY="2.0" stroke="#012d5a" strokeType="INSIDE">
-                                 <HBox.margin>
-                                    <Insets left="-8.0" />
-                                 </HBox.margin>
-                              </Ellipse>
                               <Label fx:id="currentFloorStart" prefHeight="23.0" prefWidth="187.0" styleClass="on-suface-text" text="Current Floor Start">
                                  <HBox.margin>
                                     <Insets left="8.0" />
@@ -507,6 +515,11 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="138.0">
                            <children>
                               <Ellipse fill="#edb230" radiusX="6.0" radiusY="6.0" stroke="#012d5a" strokeType="INSIDE" />
+                              <Ellipse fill="#012d5a" nodeOrientation="LEFT_TO_RIGHT" radiusX="2.0" radiusY="2.0" stroke="#012d5a" strokeType="INSIDE">
+                                 <HBox.margin>
+                                    <Insets left="-8.0" />
+                                 </HBox.margin>
+                              </Ellipse>
                               <Label fx:id="currentFloorDestLabel" prefHeight="27.0" prefWidth="232.0" styleClass="on-suface-text" text="Current Floor Destination">
                                  <HBox.margin>
                                     <Insets left="4.0" />
@@ -530,32 +543,41 @@
             </AnchorPane>
          </children>
       </HBox>
-      <VBox fx:id="AddMessageVBox" alignment="CENTER" layoutX="308.0" layoutY="14.0" prefHeight="259.0" prefWidth="268.0" spacing="20.0" style="-fx-background-radius: 16;" styleClass="primary-container">
+      <VBox fx:id="AddMessageVBox" alignment="CENTER" layoutX="308.0" layoutY="14.0" prefHeight="169.0" prefWidth="268.0" spacing="10.0" style="-fx-background-radius: 16;" styleClass="primary-container" AnchorPane.leftAnchor="308.0" AnchorPane.topAnchor="14.0">
          <children>
             <Label fx:id="AdminIDLabel" styleClass="primary-text-container" text="Admin ID" textFill="WHITE">
                <font>
                   <Font size="20.0" />
-               </font></Label>
+               </font>
+               <VBox.margin>
+                  <Insets bottom="-10.0" top="-5.0" />
+               </VBox.margin></Label>
             <TextField fx:id="AdminIDVal" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: #D9E3F8; -fx-background-radius: 8;" />
             <Label fx:id="MessageLabel" layoutX="10.0" layoutY="10.0" styleClass="primary-text-container" text="Message" textFill="WHITE">
                <font>
                   <Font name="Roboto" size="20.0" />
-               </font></Label>
+               </font>
+               <VBox.margin>
+                  <Insets bottom="-10.0" />
+               </VBox.margin></Label>
             <TextField fx:id="MessageVal" layoutX="10.0" layoutY="28.0" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: #D9E3F8; -fx-background-radius: 8;" />
             <MFXButton fx:id="MessageSubmitButton" prefHeight="23.0" prefWidth="160.0" styleClass="secondary" stylesheets="@../stylesheets/button.css" text="Submit" textFill="WHITE">
                <font>
                   <Font name="Roboto" size="12.0" />
                </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
             </MFXButton>
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding></VBox>
-      <TableView fx:id="MessageTableView" layoutX="297.0" layoutY="625.0" prefHeight="184.0" prefWidth="598.0" stylesheets="@../stylesheets/TableViewStuff.css">
+      <TableView fx:id="MessageTableView" layoutX="297.0" layoutY="625.0" prefHeight="184.0" prefWidth="550.0" stylesheets="@../stylesheets/TableViewStuff.css" visible="false" AnchorPane.leftAnchor="308.0" AnchorPane.topAnchor="14.0">
          <columns>
             <TableColumn fx:id="DateColumn" maxWidth="1.7976931348623157E308" prefWidth="120.0" text="Date" />
-            <TableColumn fx:id="AdminColumn" prefWidth="75.0" text="AdminID" />
-            <TableColumn fx:id="MessageColumn" prefWidth="400.0" text="Message" />
+            <TableColumn fx:id="AdminColumn" prefWidth="57.60003662109375" text="AdminID" />
+            <TableColumn fx:id="MessageColumn" prefWidth="380.0" text="Message" />
          </columns></TableView>
     </children>
    <stylesheets>

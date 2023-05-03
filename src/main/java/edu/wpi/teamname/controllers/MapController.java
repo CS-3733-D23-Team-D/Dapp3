@@ -369,6 +369,18 @@ public class MapController {
           Sound.playSFX(SFX.BUTTONCLICK);
           System.out.println("Viewing Message");
 
+          if (MessageVal.isVisible() == true) {
+            MessageVal.setVisible(false);
+            MessageVal.setPromptText("Type Message");
+            MessageLabel.setVisible(false);
+            AdminIDVal.setVisible(false);
+            AdminIDVal.setPromptText("Type AdminID");
+            AdminIDLabel.setVisible(false);
+            AddMessageVBox.setVisible(false);
+            MessageSubmitButton.setVisible(false);
+            AddMessageButton.setText("Add Message");
+          }
+
           if (MessageTableView.isVisible() == true) {
             MessageTableView.setVisible(false);
             ViewMessageButton.setText("View Messages");
@@ -411,6 +423,11 @@ public class MapController {
         public void handle(MouseEvent event) {
           Sound.playSFX(SFX.BUTTONCLICK);
           System.out.println("Add Message Running");
+
+          if (MessageTableView.isVisible() == true) {
+            MessageTableView.setVisible(false);
+            ViewMessageButton.setText("View Messages");
+          }
 
           if (MessageVal.isVisible() == true) {
             MessageVal.setVisible(false);
