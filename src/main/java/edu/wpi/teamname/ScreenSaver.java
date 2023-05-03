@@ -1,5 +1,7 @@
 package edu.wpi.teamname;
 
+import java.io.File;
+import java.util.ArrayList;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -14,20 +16,17 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.File;
-import java.util.ArrayList;
-
 public class ScreenSaver extends Application {
   @Override
   public void start(Stage primaryStage) {
     primaryStage.setTitle("DVD Screensaver");
     Group root = new Group();
     Scene scene = new Scene(root, 1000, 600, Color.BLACK);
-    File p = new File("res/Purple.png");
+    File p = new File("res/edu/teamname/DVD/Purple.png");
     final Image purple = new Image(p.toURI().toString());
-    File r = new File("res/Red.png");
+    File r = new File("res/edu/teamname/DVD/Red.png");
     final Image red = new Image(r.toURI().toString());
-    File y = new File("res/Yellow.png");
+    File y = new File("res/edu/teamname/DVD/Yellow.png");
     final Image yellow = new Image(y.toURI().toString());
     ArrayList<ImageView> Logos = new ArrayList<>();
     ArrayList<Integer> counts = new ArrayList<>();
@@ -42,55 +41,61 @@ public class ScreenSaver extends Application {
     counts.add(0);
     dxs.add(2.0);
     dys.add(3.0);
-    scene.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-      @Override
-      public void handle(MouseEvent event) {
-        ImageView newLogo = new ImageView(purple);
-        newLogo.setX(event.getX());
-        newLogo.setY(event.getY());
-        newLogo.setFitWidth(137);
-        newLogo.setFitHeight(66);
-        Logos.add(newLogo);
-        counts.add(0);
-        dxs.add(2.0);
-        dys.add(3.0);
-        root.getChildren().add(newLogo);
-      }
-    });
-    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
-
-      @Override
-      public void handle(ActionEvent event) {
-
-        for (int i = 0; i < Logos.size(); i ++) {
-          double dx = dxs.get(i);
-          double dy = dys.get(i);
-          double x = Logos.get(i).getX() + dx;
-          double y = Logos.get(i).getY() + dy;
-
-          if (x + 137 > 1000 || x < 0) {
-            dxs.set(i, -dx);
-            counts.set(i, (counts.get(i) + 1) % 3);
+    scene.addEventFilter(
+        MouseEvent.MOUSE_CLICKED,
+        new EventHandler<MouseEvent>() {
+          @Override
+          public void handle(MouseEvent event) {
+            ImageView newLogo = new ImageView(purple);
+            newLogo.setX(event.getX());
+            newLogo.setY(event.getY());
+            newLogo.setFitWidth(137);
+            newLogo.setFitHeight(66);
+            Logos.add(newLogo);
+            counts.add(0);
+            dxs.add(2.0);
+            dys.add(3.0);
+            root.getChildren().add(newLogo);
           }
+        });
+    Timeline timeline =
+        new Timeline(
+            new KeyFrame(
+                Duration.millis(20),
+                new EventHandler<ActionEvent>() {
 
-          if (y + 66 > 600 || y < 0) {
-            dys.set(i, -dy);
-            counts.set(i, (counts.get(i) + 1) % 3);
-          }
+                  @Override
+                  public void handle(ActionEvent event) {
 
-          if (counts.get(i) == 0) {
-            Logos.get(i).setImage(purple);
-          } else if (counts.get(i) == 1) {
-            Logos.get(i).setImage(yellow);
-          } else if (counts.get(i) == 2) {
-            Logos.get(i).setImage(red);
-          }
+                    for (int i = 0; i < Logos.size(); i++) {
+                      double dx = dxs.get(i);
+                      double dy = dys.get(i);
+                      double x = Logos.get(i).getX() + dx;
+                      double y = Logos.get(i).getY() + dy;
 
-          Logos.get(i).setX(x);
-          Logos.get(i).setY(y);
-        }
-      }
-    }));
+                      if (x + 137 > 1000 || x < 0) {
+                        dxs.set(i, -dx);
+                        counts.set(i, (counts.get(i) + 1) % 3);
+                      }
+
+                      if (y + 66 > 600 || y < 0) {
+                        dys.set(i, -dy);
+                        counts.set(i, (counts.get(i) + 1) % 3);
+                      }
+
+                      if (counts.get(i) == 0) {
+                        Logos.get(i).setImage(purple);
+                      } else if (counts.get(i) == 1) {
+                        Logos.get(i).setImage(yellow);
+                      } else if (counts.get(i) == 2) {
+                        Logos.get(i).setImage(red);
+                      }
+
+                      Logos.get(i).setX(x);
+                      Logos.get(i).setY(y);
+                    }
+                  }
+                }));
     root.getChildren().addAll(Logos);
     primaryStage.setScene(scene);
     primaryStage.show();

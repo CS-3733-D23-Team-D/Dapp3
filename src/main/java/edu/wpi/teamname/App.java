@@ -1,11 +1,10 @@
 package edu.wpi.teamname;
 
 import edu.wpi.teamname.database.DataManager;
-import edu.wpi.teamname.extras.Sound;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-
+import java.util.concurrent.atomic.AtomicInteger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -25,7 +24,11 @@ public class App extends Application {
   @Setter @Getter private static BorderPane rootPane;
   private boolean loading;
 
-  private Timeline idleTimeline;
+  Timeline idleTimeline;
+  boolean flag = false;
+  AtomicInteger count = new AtomicInteger();
+
+  ScreenSaver ss = new ScreenSaver();
 
   @Override
   public void init() {
@@ -70,36 +73,36 @@ public class App extends Application {
 
     // Create an event handler for mouse movement
     root.setOnMouseMoved(
-            event -> {
-              // Reset the idle timeline when the mouse is moved
-              resetIdleTimeline(root);
-            });
+        event -> {
+          // Reset the idle timeline when the mouse is moved
+          resetIdleTimeline(root);
+        });
 
     root.setOnKeyPressed(
-            event -> {
-              resetIdleTimeline(root);
-            });
+        event -> {
+          resetIdleTimeline(root);
+        });
 
     // Create a timeline to track idle time
     idleTimeline =
-            new Timeline(
-                    new KeyFrame(
-                            Duration.seconds(1),
-                            event -> {
-                              count.getAndIncrement();
-                              // Update the idle time display
-                              System.out.println("Time: " + count);
+        new Timeline(
+            new KeyFrame(
+                Duration.seconds(1),
+                event -> {
+                  count.getAndIncrement();
+                  // Update the idle time display
+                  System.out.println("Time: " + count);
 
-                              // Do something when the idle time exceeds a certain duration
-                              if (
-                                /*idleTimeline.getCurrentTime().greaterThanOrEqualTo(Duration.seconds(5)*/ count
-                                      .get()
-                                      == 5
-                                      && !flag) {
-                                flag = true;
-                                GlobalVariables.getSs().startScreenSaver(root);
-                              }
-                            }));
+                  // Do something when the idle time exceeds a certain duration
+                  if (
+                  /*idleTimeline.getCurrentTime().greaterThanOrEqualTo(Duration.seconds(5)*/ count
+                              .get()
+                          == 5
+                      && !flag) {
+                    flag = true;
+                    ss.start(primaryStage);
+                  }
+                }));
     idleTimeline.setCycleCount(Timeline.INDEFINITE);
     idleTimeline.play();
   }
@@ -109,7 +112,7 @@ public class App extends Application {
     System.out.println("This ran");
     count.getAndSet(0);
     flag = false;
-    GlobalVariables.getSs().stopScreenSaver(root);
+    // GlobalVariables.getSs().stopScreenSaver(root);
     idleTimeline.stop();
     idleTimeline.playFromStart();
   }
